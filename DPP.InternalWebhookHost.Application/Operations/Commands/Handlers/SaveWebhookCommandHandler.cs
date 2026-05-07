@@ -1,6 +1,6 @@
 ﻿using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
 using DPP.InternalWebhookHost.Domain.Entities.Request;
-using DPP.InternalWebhookHost.Infrastructure.Interfaces; 
+using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,11 +23,6 @@ public class SaveWebhookCommandHandler
 		SaveWebhookCommand request,
 		CancellationToken cancellationToken)
 	{
-		var webhookLog = new GetWebhookPayloadsRequest
-		{
-			Payload = request.Payload
-		};
-
-		return await webhookRepository.WebhoolLogSave(webhookLog, cancellationToken); ;
+		return await webhookRepository.WebhoolLogSave(new SaveWebhookPayloadsRequest(request.Payload), cancellationToken); 
 	}
 }

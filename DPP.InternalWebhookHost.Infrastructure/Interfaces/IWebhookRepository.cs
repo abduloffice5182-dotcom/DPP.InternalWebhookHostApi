@@ -3,6 +3,6 @@
 namespace DPP.InternalWebhookHost.Infrastructure.Interfaces;
 public interface IWebhookRepository
 {
-	Task<int> WebhoolLogSave(GetWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken);
+	Task<int> WebhoolLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken);
 
 	}

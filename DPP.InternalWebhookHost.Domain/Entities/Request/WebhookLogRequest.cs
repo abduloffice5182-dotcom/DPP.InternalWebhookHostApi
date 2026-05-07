@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace DPP.InternalWebhookHost.Domain.Entities.Request
 {
-	public class GetWebhookPayloadsRequest
-	{
-		public string Payload { get; set; }
-	}
+	public record SaveWebhookPayloadsRequest(string Payload);
 }
