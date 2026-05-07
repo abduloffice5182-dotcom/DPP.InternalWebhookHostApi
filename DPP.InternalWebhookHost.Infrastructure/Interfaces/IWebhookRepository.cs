@@ -1,6 +1,4 @@
-﻿using DPP.InternalWebhookHost.Domain.Entities.Request;
-
-namespace DPP.InternalWebhookHost.Infrastructure.Interfaces;
+﻿namespace DPP.InternalWebhookHost.Infrastructure.Interfaces;
 public interface IWebhookRepository
 {
 	Task<int> WebhoolLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken);

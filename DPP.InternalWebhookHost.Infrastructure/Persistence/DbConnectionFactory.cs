@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-namespace DPP.InternalWebhookHost.Infrastructure.Persistence;
+﻿namespace DPP.InternalWebhookHost.Infrastructure.Persistence;
 
 public class DbConnectionFactory : IDbConnectionFactory
 {
