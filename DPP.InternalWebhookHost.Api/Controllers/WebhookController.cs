@@ -73,7 +73,7 @@ public class WebhookController : ControllerBase
 			logger.LogInformation("Webhook Payload : {0}", requestBody);
 			if (string.IsNullOrWhiteSpace(requestBody))
 			{
-				return Ok(new ApiResponse { Success = false, HttpStatusCode = (int)HttpStatusCode.InternalServerError, Message = "Payload is Empty" });
+				return Ok(new ApiResponse(Success: false, (int)HttpStatusCode.InternalServerError, "Payload is Empty", null));
 			}
 
 			var response = await mediator.Send(new SaveWebhookCommand
@@ -81,12 +81,12 @@ public class WebhookController : ControllerBase
 				Payload = requestBody
 			}, cancellationToken);
 
-			return Ok(new ApiResponse { Success = true, HttpStatusCode = (int)HttpStatusCode.OK, Message = "Payload Recieved Successfully", Response = response });
+			return Ok(new ApiResponse(true, (int)HttpStatusCode.OK, "Payload Recieved Successfully", response));
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, "Error while Saving Webhook Payload {0}", requestBody);
-			return Ok(new ApiResponse { Success = false, HttpStatusCode = (int)HttpStatusCode.InternalServerError, Message = "Error while Saving Webhook Payload" });
+			return Ok(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error while Saving Webhook Payload", null));
 		}
 
 	}

@@ -4,19 +4,15 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-
-
+var configuration = builder.Configuration; 
+builder.Services.AddControllers(); 
 builder.Services.AddApiVersioning(options =>
 {
 	options.DefaultApiVersion = new ApiVersion(1, 0);
 	options.AssumeDefaultVersionWhenUnspecified = true;
 	options.ReportApiVersions = true;
 });
-var configuration = builder.Configuration;
-
+ 
 // Configure Serilog once
 Log.Logger = new LoggerConfiguration()
 	.ReadFrom.Configuration(configuration)
@@ -29,9 +25,12 @@ builder.Host.UseSerilog(Log.Logger);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.RegisterDI(Log.Logger);
+builder.Services.AddRouting(options =>
+{
+	options.LowercaseUrls = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
