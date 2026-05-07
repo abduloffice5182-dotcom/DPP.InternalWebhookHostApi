@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using DPP.InternalWebhookHost.Application.Operations.Commands.Queries.Requests;
 using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
 using DPP.InternalWebhookHost.Domain.Common.Response;
 using MediatR;
@@ -29,6 +30,17 @@ public class WebhookController : ControllerBase
 	{
 		try
 		{
+			var query = new GetWebhookPayloadsRequest
+			{
+				FilterStartDatetime = request.FilterStartDatetime,
+				FilterEndDatetime = request.FilterEndDatetime,
+				PageNumber = request.PageNumber,
+				PageSize = request.PageSize
+			};
+
+			var response = await mediator.Send(query, cancellationToken);
+
+			return Ok(response);
 
 		}
 		catch (Exception ex)
@@ -37,7 +49,6 @@ public class WebhookController : ControllerBase
 		}
 		return Ok();
 	}
-
 	#endregion
 
 	#region POST

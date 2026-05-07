@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DPP.InternalWebhookHost.Application.Operations.Commands.Requests
+namespace DPP.InternalWebhookHost.Application.Operations.Commands.Queries.Requests
 {
 	public class SortWithPageParameter
 	{
