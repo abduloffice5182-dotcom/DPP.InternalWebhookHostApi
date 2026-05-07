@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="Operations\Fortellis\**" />
-    <Compile Remove="Operations\Queries\**" />
     <EmbeddedResource Remove="Operations\Fortellis\**" />
-    <EmbeddedResource Remove="Operations\Queries\**" />
     <None Remove="Operations\Fortellis\**" />
-    <None Remove="Operations\Queries\**" />
   </ItemGroup>
 
   <ItemGroup>
