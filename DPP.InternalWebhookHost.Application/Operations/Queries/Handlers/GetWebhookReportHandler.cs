@@ -1,8 +1,8 @@
-﻿using DPP.InternalWebhookHost.Application.Operations.Commands.Queries.Requests;
+﻿using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
 using DPP.InternalWebhookHost.Domain.Common.Response;
 using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 using MediatR;
-namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers;
+namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
 public class GetWebhookReportHandler : IRequestHandler<GetWebhookPayloadsRequest, ApiResponse>
 {
 
@@ -27,10 +27,10 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookPayloadsRequest
 			HttpStatusCode: 200,
 			Response: new
 			{
-				TotalCount = result.TotalCount,
+				result.TotalCount,
 				Items = result.Items.ToList(),
-				PageNumber = request.PageNumber,
-				PageSize = request.PageSize
+				request.PageNumber,
+				request.PageSize
 			},
 			Message: "Webhook report retrieved successfully."
 		);

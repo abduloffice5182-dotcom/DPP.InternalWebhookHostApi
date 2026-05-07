@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using DPP.InternalWebhookHost.Domain.Common.Response;
 
-namespace DPP.InternalWebhookHost.Application.Operations.Commands.Queries.Requests;
+namespace DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
 
 public class GetWebhookPayloadsRequest : SortWithPageParameter , IRequest<ApiResponse>
 {

@@ -1,7 +1,7 @@
 ﻿using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
 using DPP.InternalWebhookHost.Domain.Entities.Request;
 using DPP.InternalWebhookHost.Infrastructure.Interfaces;
-using MediatR; 
+using MediatR;
 
 namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers;
 public class SaveWebhookCommandHandler
