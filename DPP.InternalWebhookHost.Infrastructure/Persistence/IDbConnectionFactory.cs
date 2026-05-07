@@ -1,8 +1,6 @@
-﻿namespace DPP.PartnerPaymentIntegration.Infrastructure.Persistence
+﻿namespace DPP.InternalWebhookHost.Infrastructure.Persistence;
+public interface IDbConnectionFactory
 {
-    public interface IDbConnectionFactory
-    {
-        Task<IDbConnection> GetCoreMerchantConnection(CancellationToken cancellationToken);
-        Task<IDbConnection> GetCoreTransactionConnection(CancellationToken cancellationToken);
-    }
+	Task<IDbConnection> GetCoreMerchantConnection(CancellationToken cancellationToken);
+	Task<IDbConnection> GetCoreTransactionConnection(CancellationToken cancellationToken);
 }

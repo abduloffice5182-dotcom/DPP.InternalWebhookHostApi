@@ -11,3 +11,8 @@ D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Applic
 D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\refint\DPP.InternalWebhookHost.Application.dll
 D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.pdb
 D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\ref\DPP.InternalWebhookHost.Application.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Domain.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Domain.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.Inte.004F559A.Up2Date

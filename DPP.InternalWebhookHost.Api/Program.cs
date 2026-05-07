@@ -1,6 +1,5 @@
 using Asp.Versioning;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using DPP.InternalWebhookHost.Api.Extension; 
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,15 +31,14 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
-
+builder.Services.RegisterDI(Log.Logger);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

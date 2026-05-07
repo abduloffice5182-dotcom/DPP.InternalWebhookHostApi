@@ -1,0 +1,16 @@
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.csproj.AssemblyReference.cache
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.AssemblyInfoInputs.cache
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.AssemblyInfo.cs
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.sourcelink.json
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\bin\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.deps.json
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\bin\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\bin\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\bin\Debug\net8.0\DPP.InternalWebhookHost.Domain.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\bin\Debug\net8.0\DPP.InternalWebhookHost.Domain.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.Inte.46732197.Up2Date
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\refint\DPP.InternalWebhookHost.Infrastructure.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\DPP.InternalWebhookHost.Infrastructure.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Infrastructure\obj\Debug\net8.0\ref\DPP.InternalWebhookHost.Infrastructure.dll

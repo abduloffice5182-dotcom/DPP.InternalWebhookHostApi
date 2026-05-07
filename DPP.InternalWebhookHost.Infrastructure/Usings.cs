@@ -1,6 +1,3 @@
-﻿global using Dapper;
-global using DPP.PartnerPaymentIntegration.Infrastructure.Interfaces;
-global using DPP.PartnerPaymentIntegration.Infrastructure.Persistence;
-global using Microsoft.Extensions.Logging;
-global using Newtonsoft.Json;
+﻿global using Dapper;  
+global using Microsoft.Extensions.Logging; 
 global using System.Data;

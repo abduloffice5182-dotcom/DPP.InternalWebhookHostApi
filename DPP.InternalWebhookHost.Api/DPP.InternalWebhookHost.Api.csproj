@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DPP.InternalWebhookHost.Application\DPP.InternalWebhookHost.Application.csproj" />
     <ProjectReference Include="..\DPP.InternalWebhookHost.Domain\DPP.InternalWebhookHost.Domain.csproj" />
+    <ProjectReference Include="..\DPP.InternalWebhookHost.Infrastructure\DPP.InternalWebhookHost.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

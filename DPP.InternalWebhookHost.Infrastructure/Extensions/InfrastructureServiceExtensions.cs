@@ -1,7 +1,9 @@
-﻿using DPP.PartnerPaymentIntegration.Infrastructure.Repositories;
+﻿using DPP.InternalWebhookHost.Infrastructure.Interfaces;
+using DPP.InternalWebhookHost.Infrastructure.Persistence;
+using DPP.InternalWebhookHost.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DPP.PartnerPaymentIntegration.Infrastructure.Extensions
+namespace DPP.InternalWebhookHost.Infrastructure.Extensions
 {
     /// <summary>
     /// Extension methods for registering infrastructure services.
@@ -17,12 +19,7 @@ namespace DPP.PartnerPaymentIntegration.Infrastructure.Extensions
         {
             // Register all Repository
             services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-            services.AddTransient<IMerchantRepository, MerchantRepository>();
-            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
-            services.AddSingleton<FortellisTokenResponse>();
-            services.AddScoped<IFortellisAPIClient, FortellisAPIClient>();
-            services.AddTransient<IFortellisIntegration, FortellisIntegration>();
-            services.AddTransient<IFortellisRepositories, FortellisRepositories>();
+            services.AddTransient<IWebhookRepository, WebhookRepository>(); 
 
             return services;
         }

@@ -1,4 +1,7 @@
-﻿namespace DPP.InternalWebhookHost.Api.Extension;
+﻿using DPP.InternalWebhookHost.Application.Extensions;
+using DPP.InternalWebhookHost.Infrastructure.Extensions;
+
+namespace DPP.InternalWebhookHost.Api.Extension;
 	public static class RegisterDependency
 	{
 		/// <summary>
@@ -9,6 +12,8 @@
 		public static void RegisterDI(this IServiceCollection services, Serilog.ILogger logger)
 		{
 			services.AddSingleton(logger);
-			//services.AddInfrastructureServices();
+			services.AddInfrastructureServices();
+		services.AddApplicationServices();
 		}
 	}
+

@@ -4,14 +4,14 @@
     "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {
+    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
-        "projectName": "DPP.InternalWebhookHost.Infrastructure",
-        "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
+        "projectName": "DPP.InternalWebhookHost.Domain",
+        "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
         "packagesPath": "C:\\Users\\VIKRAM\\.nuget\\packages\\",
-        "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\obj\\",
+        "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -64,6 +64,111 @@
               "target": "Package",
               "version": "[8.1.0, )"
             },
+            "MediatR": {
+              "target": "Package",
+              "version": "[13.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Serilog.Sinks.Http": {
+              "target": "Package",
+              "version": "[9.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "projectName": "DPP.InternalWebhookHost.Infrastructure",
+        "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\VIKRAM\\.nuget\\packages\\",
+        "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\VIKRAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "http://fw1-p-tfs02:8080/tfs/GatewayServices/_packaging/0c53cce0-f778-4ef6-83f6-216eb1613ae6/nuget/v3/index.json": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj": {
+                "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Asp.Versioning.Http": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "Asp.Versioning.Mvc": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "Asp.Versioning.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.1.72, )"
@@ -71,6 +176,10 @@
             "MediatR": {
               "target": "Package",
               "version": "[13.0.0, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.1.2, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
