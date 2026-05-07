@@ -3,7 +3,7 @@ using DPP.InternalWebhookHost.Domain.Common.Response;
 
 namespace DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
 
-public class GetWebhookPayloadsRequest : SortWithPageParameter , IRequest<ApiResponse>
+public class GetWebhookReportQuery : SortWithPageParameter , IRequest<ApiResponse>
 {
 	public DateTime FilterStartDatetime { get; set; }
 	public DateTime FilterEndDatetime { get; set; }

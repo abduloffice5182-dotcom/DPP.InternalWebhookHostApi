@@ -6,7 +6,7 @@ public class WebhookRepository : IWebhookRepository
 	{
 		this.dbConnection = dbConnection;
 	}
-	public async Task<int> WebhoolLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken)
+	public async Task<int> WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken)
 	{
 		using var conn = await dbConnection.GetCoreTransactionConnection(cancellationToken);
 		var parameters = new DynamicParameters();

@@ -3,7 +3,7 @@ using DPP.InternalWebhookHost.Domain.Common.Response;
 using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 using MediatR;
 namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
-public class GetWebhookReportHandler : IRequestHandler<GetWebhookPayloadsRequest, ApiResponse>
+public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, ApiResponse>
 {
 
 	private readonly IWebhookRepository repository;
@@ -13,12 +13,11 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookPayloadsRequest
 		this.repository = repository;
 	}
 
-	public async Task<ApiResponse> Handle(GetWebhookPayloadsRequest request, CancellationToken cancellationToken)
+	public async Task<ApiResponse> Handle(GetWebhookReportQuery request, CancellationToken cancellationToken)
 	{
 		DateTime? start = request.FilterStartDatetime == default ? null : request.FilterStartDatetime;
 		DateTime? end = request.FilterEndDatetime == default ? null : request.FilterEndDatetime;
 
-		// Call Infrastructure via the Interface
 		var result = await repository.GetWebhookReportAsync(start, end, request.PageNumber, request.PageSize, cancellationToken);
 
 		return new ApiResponse

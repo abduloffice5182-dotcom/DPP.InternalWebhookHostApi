@@ -4,8 +4,7 @@ using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 using MediatR;
 
 namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers;
-public class SaveWebhookCommandHandler
-: IRequestHandler<SaveWebhookCommand, int>
+public class SaveWebhookCommandHandler: IRequestHandler<SaveWebhookCommand, int>
 {
 	private readonly IWebhookRepository webhookRepository;
 
@@ -14,10 +13,8 @@ public class SaveWebhookCommandHandler
 		this.webhookRepository = webhookRepository;
 	}
 
-	public async Task<int> Handle(
-		SaveWebhookCommand request,
-		CancellationToken cancellationToken)
+	public async Task<int> Handle( SaveWebhookCommand request, CancellationToken cancellationToken)
 	{
-		return await webhookRepository.WebhoolLogSave(new SaveWebhookPayloadsRequest(request.Payload), cancellationToken); 
+		return await webhookRepository.WebhooklLogSave(new SaveWebhookPayloadsRequest(request.Payload), cancellationToken); 
 	}
 }
