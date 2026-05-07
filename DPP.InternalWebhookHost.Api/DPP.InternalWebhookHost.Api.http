@@ -1,0 +1,6 @@
+@DPP.InternalWebhookHost.Api_HostAddress = http://localhost:5274
+
+GET {{DPP.InternalWebhookHost.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Tests\\DPP.InternalWebhookHost.Tests.csproj",
+      "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Tests\\DPP.InternalWebhookHost.Tests.csproj",
       "projectName": "DPP.InternalWebhookHost.Tests",
-      "projectPath": "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Tests\\DPP.InternalWebhookHost.Tests.csproj",
+      "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Tests\\DPP.InternalWebhookHost.Tests.csproj",
       "packagesPath": "C:\\Users\\VIKRAM\\.nuget\\packages\\",
-      "outputPath": "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Tests\\obj\\",
+      "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

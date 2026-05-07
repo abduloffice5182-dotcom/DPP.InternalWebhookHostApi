@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {}
+    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {
+    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
         "projectName": "DPP.InternalWebhookHost.Infrastructure",
-        "projectPath": "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\VIKRAM\\.nuget\\packages\\",
-        "outputPath": "D:\\Abdullah M\\FAPS\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\obj\\",
+        "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

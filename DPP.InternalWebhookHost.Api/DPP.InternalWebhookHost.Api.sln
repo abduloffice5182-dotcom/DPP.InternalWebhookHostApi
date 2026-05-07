@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPP.InternalWebhookHost.Api", "DPP.InternalWebhookHost.Api.csproj", "{409E9B56-D5A2-456F-A43F-41B831CAD33A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPP.InternalWebhookHost.Tests", "..\DPP.InternalWebhookHost.Tests\DPP.InternalWebhookHost.Tests.csproj", "{BDD7835A-E67C-E3A5-7F6C-3B7956E11A93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPP.InternalWebhookHost.Infrastructure", "..\DPP.InternalWebhookHost.Infrastructure\DPP.InternalWebhookHost.Infrastructure.csproj", "{7C1C498B-EE83-0D89-D5FD-304D4BA9D9C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPP.InternalWebhookHost.Domain", "..\DPP.InternalWebhookHost.Domain\DPP.InternalWebhookHost.Domain.csproj", "{0E51641A-A80C-9637-225D-2AFFAAC1A531}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPP.InternalWebhookHost.Application", "..\DPP.InternalWebhookHost.Application\DPP.InternalWebhookHost.Application.csproj", "{CE6D95B7-6F58-D335-015E-179E97E10CC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{409E9B56-D5A2-456F-A43F-41B831CAD33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409E9B56-D5A2-456F-A43F-41B831CAD33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409E9B56-D5A2-456F-A43F-41B831CAD33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409E9B56-D5A2-456F-A43F-41B831CAD33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDD7835A-E67C-E3A5-7F6C-3B7956E11A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD7835A-E67C-E3A5-7F6C-3B7956E11A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD7835A-E67C-E3A5-7F6C-3B7956E11A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD7835A-E67C-E3A5-7F6C-3B7956E11A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C1C498B-EE83-0D89-D5FD-304D4BA9D9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1C498B-EE83-0D89-D5FD-304D4BA9D9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1C498B-EE83-0D89-D5FD-304D4BA9D9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1C498B-EE83-0D89-D5FD-304D4BA9D9C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E51641A-A80C-9637-225D-2AFFAAC1A531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E51641A-A80C-9637-225D-2AFFAAC1A531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E51641A-A80C-9637-225D-2AFFAAC1A531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E51641A-A80C-9637-225D-2AFFAAC1A531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE6D95B7-6F58-D335-015E-179E97E10CC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6D95B7-6F58-D335-015E-179E97E10CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6D95B7-6F58-D335-015E-179E97E10CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6D95B7-6F58-D335-015E-179E97E10CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D513FB9E-4255-474F-8C56-F29B15DCD536}
+	EndGlobalSection
+EndGlobal
