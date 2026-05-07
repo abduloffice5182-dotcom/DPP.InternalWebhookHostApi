@@ -1,0 +1,12 @@
+﻿global using Asp.Versioning;
+global using Asp.Versioning.ApiExplorer;
+global using MediatR;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.Filters;
+global using Microsoft.OpenApi.Models;
+global using Newtonsoft.Json;
+global using Serilog;
+global using System.Net;
+global using System.Text.Json;
+global using System.Text.Json.Serialization; 

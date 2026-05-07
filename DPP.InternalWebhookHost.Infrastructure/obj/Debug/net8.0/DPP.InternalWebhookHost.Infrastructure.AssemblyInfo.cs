@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DPP.InternalWebhookHost.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77c83d476a861f98b6b1eca2c684cc8d64e82643")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aaae9d54591ee5f37f919f6b2d554e4936580273")]
 [assembly: System.Reflection.AssemblyProductAttribute("DPP.InternalWebhookHost.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DPP.InternalWebhookHost.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
