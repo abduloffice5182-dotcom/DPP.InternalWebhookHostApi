@@ -26,7 +26,7 @@ public class WebhookController : ControllerBase
 	#region GET
 	[HttpGet]
 	[Route("get")]
-	public async Task<IActionResult> Get([FromBody] GetWebhookPayloadsRequest request, CancellationToken cancellationToken)
+	public async Task<IActionResult> Get([FromQuery] GetWebhookPayloadsRequest request, CancellationToken cancellationToken)
 	{
 		try
 		{

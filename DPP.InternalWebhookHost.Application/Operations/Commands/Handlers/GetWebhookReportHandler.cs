@@ -17,9 +17,9 @@ namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers
         
         private readonly IWebhookRepository repository;
 
-        public GetWebhookReportHandler(IDbConnection dbConnection)
+        public GetWebhookReportHandler(IWebhookRepository repository)
         {
-            repository = repository;
+            this.repository = repository;
         }
 
         public async Task<ApiResponse> Handle(GetWebhookPayloadsRequest request, CancellationToken cancellationToken)

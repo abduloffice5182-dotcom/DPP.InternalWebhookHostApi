@@ -46,17 +46,19 @@ public class WebhookRepository : IWebhookRepository
         //    PageSize = pageSize
         //});
         using var conn = await dbConnection.GetCoreTransactionConnection(cancellationToken);
-
+        int validPageSize = pageSize > 0 ? pageSize : 10;
+        int validOffset = (pageNumber > 0 ? pageNumber - 1 : 0) * validPageSize;
+       
         var results = await conn.QueryMultipleAsync(DbQueries.GetWebhoolLogs, new
         {
             StartDateTime = start,
             EndDateTime = end,
-            Offset = (pageNumber - 1) * pageSize,
-            PageSize = pageSize
+            Offset = validOffset,
+            PageSize = validPageSize
         });
 
-        var totalCount = await results.ReadFirstAsync<int>();
-        var items = await results.ReadAsync<dynamic>();
+        var totalCount =  results.Read<int>().FirstOrDefault();
+        var items =  results.Read<dynamic>();
 
         return (totalCount, items);
     }
