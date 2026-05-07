@@ -63,7 +63,7 @@ public class WebhookController : ControllerBase
 			logger.LogInformation("Webhook Payload : {0}", requestBody);
 			if (string.IsNullOrWhiteSpace(requestBody))
 			{
-				return Ok(new ApiResponse(Success: false, (int)HttpStatusCode.InternalServerError, "Payload is Empty", null));
+				return Ok(new ApiResponse(Success: false, (int)HttpStatusCode.BadRequest, "Payload is Empty", null));
 			}
 
 			var response = await mediator.Send(new SaveWebhookCommand
