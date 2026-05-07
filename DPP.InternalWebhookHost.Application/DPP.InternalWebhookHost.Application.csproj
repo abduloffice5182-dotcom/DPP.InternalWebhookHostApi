@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Operations\Commands\Handlers\" />
+    <Folder Include="Operations\Fortellis\Commands\Handlers\" />
+    <Folder Include="Operations\Fortellis\Commands\Requests\" />
+    <Folder Include="Operations\Queries\Handlers\" />
+    <Folder Include="Operations\Queries\Requests\" />
+  </ItemGroup>
+
+</Project>
