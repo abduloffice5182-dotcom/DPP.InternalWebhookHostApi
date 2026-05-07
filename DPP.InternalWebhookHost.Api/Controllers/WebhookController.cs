@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
-using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
+using DPP.InternalWebhookHost.Application.Operations.Commands.Queries.Requests;
+//using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
 using DPP.InternalWebhookHost.Domain.Common.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +22,25 @@ namespace DPP.InternalWebhookHost.Api.Controllers
 			this.logger = logger;
 			this.mediator = mediator;
 		}
-		[HttpGet]
+		[HttpPost]
 		[Route("get")]
 		public async Task<IActionResult> Get([FromBody] GetWebhookPayloadsRequest request, CancellationToken cancellationToken)
 		{
 			try
 			{
+                var query = new GetWebhookPayloadsRequest
+						{
+							FilterStartDatetime = request.FilterStartDatetime,
+							FilterEndDatetime = request.FilterEndDatetime,
+							PageNumber = request.PageNumber,
+							PageSize = request.PageSize
+						};
 
-			}
+                var response = await mediator.Send(query, cancellationToken);
+
+                return Ok(response);
+
+            }
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Error while Saving Webhook Payload {0}", ex);
