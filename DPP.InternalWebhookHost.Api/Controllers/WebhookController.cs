@@ -1,14 +1,4 @@
-﻿using Asp.Versioning;
-using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
-using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
-using DPP.InternalWebhookHost.Domain.Common.Response;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Text;
-using System.Threading;
-
-namespace DPP.InternalWebhookHost.Api.Controllers;
+﻿namespace DPP.InternalWebhookHost.Api.Controllers;
 
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]

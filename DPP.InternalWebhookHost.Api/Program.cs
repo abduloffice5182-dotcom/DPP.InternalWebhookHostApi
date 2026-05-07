@@ -1,7 +1,3 @@
-using Asp.Versioning;
-using DPP.InternalWebhookHost.Api.Extension; 
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration; 
@@ -27,6 +23,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.RegisterDI(Log.Logger);
+builder.Services.RegisterServices(configuration);
 builder.Services.AddRouting(options =>
 {
 	options.LowercaseUrls = true;
