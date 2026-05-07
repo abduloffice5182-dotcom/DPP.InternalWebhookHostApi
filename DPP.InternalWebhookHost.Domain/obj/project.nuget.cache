@@ -1,9 +1,25 @@
 {
   "version": 2,
-  "dgSpecHash": "rLgcY9LeMhA=",
+  "dgSpecHash": "BhvsgaJYXhM=",
   "success": true,
   "projectFilePath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\asp.versioning.abstractions\\8.1.0\\asp.versioning.abstractions.8.1.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\asp.versioning.http\\8.1.0\\asp.versioning.http.8.1.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\asp.versioning.mvc\\8.1.0\\asp.versioning.mvc.8.1.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\asp.versioning.mvc.apiexplorer\\8.1.0\\asp.versioning.mvc.apiexplorer.8.1.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\mediatr\\13.0.0\\mediatr.13.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0\\microsoft.extensions.logging.8.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.0.1\\microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.0.1\\microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.identitymodel.logging\\8.0.1\\microsoft.identitymodel.logging.8.0.1.nupkg.sha512",
+    "C:\\Users\\VIKRAM\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.0.1\\microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
     "C:\\Users\\VIKRAM\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": [

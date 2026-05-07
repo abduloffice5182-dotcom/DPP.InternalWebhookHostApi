@@ -1,0 +1,13 @@
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.csproj.AssemblyReference.cache
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.AssemblyInfoInputs.cache
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.AssemblyInfo.cs
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.csproj.CoreCompileInputs.cache
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.sourcelink.json
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Application.deps.json
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Application.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\bin\Debug\net8.0\DPP.InternalWebhookHost.Application.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\refint\DPP.InternalWebhookHost.Application.dll
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\DPP.InternalWebhookHost.Application.pdb
+D:\Abdullah M\FAPS\git\DPP.InternalWebhookHostApi\DPP.InternalWebhookHost.Application\obj\Debug\net8.0\ref\DPP.InternalWebhookHost.Application.dll

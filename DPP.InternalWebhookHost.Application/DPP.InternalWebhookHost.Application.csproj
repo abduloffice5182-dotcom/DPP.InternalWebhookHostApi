@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
@@ -15,6 +18,8 @@
     <Folder Include="Operations\Commands\Handlers\" />
     <Folder Include="Operations\Fortellis\Commands\Handlers\" />
     <Folder Include="Operations\Fortellis\Commands\Requests\" />
+    <Folder Include="Operations\Fortellis\Queries\Handlers\" />
+    <Folder Include="Operations\Fortellis\Queries\Requests\" />
     <Folder Include="Operations\Queries\Handlers\" />
     <Folder Include="Operations\Queries\Requests\" />
   </ItemGroup>
