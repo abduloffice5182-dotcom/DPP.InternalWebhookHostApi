@@ -23,7 +23,7 @@ public class SaveWebhookCommandHandler
 		SaveWebhookCommand request,
 		CancellationToken cancellationToken)
 	{
-		var webhookLog = new WebhookLogRequest
+		var webhookLog = new GetWebhookPayloadsRequest
 		{
 			Payload = request.Payload
 		};

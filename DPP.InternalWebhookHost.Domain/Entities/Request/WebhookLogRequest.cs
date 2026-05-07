@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPP.InternalWebhookHost.Domain.Entities.Request
 {
-	public class WebhookLogRequest
+	public class GetWebhookPayloadsRequest
 	{
 		public string Payload { get; set; }
 	}

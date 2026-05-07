@@ -1,25 +1,26 @@
 ﻿using DPP.InternalWebhookHost.Domain.Entities.Request;
 using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 using DPP.InternalWebhookHost.Infrastructure.Persistence;
+using DPP.PartnerPaymentIntegration.Infrastructure;
 namespace DPP.InternalWebhookHost.Infrastructure.Repositories;
 public class WebhookRepository : IWebhookRepository
 {
-	private readonly IDbConnectionFactory _dbConnection;
-	private readonly ILogger<WebhookRepository> _logger;
+	private readonly IDbConnectionFactory dbConnection;
+	private readonly ILogger<WebhookRepository> logger;
 
 	public WebhookRepository(IDbConnectionFactory dbConnection, ILogger<WebhookRepository> logger)
 	{
-		_dbConnection = dbConnection;
-		_logger = logger;
+		this.dbConnection = dbConnection;
+		this.logger = logger;
 	}
-	public async Task<int> WebhoolLogSave(WebhookLogRequest webhookLogRequest, CancellationToken cancellationToken)
+	public async Task<int> WebhoolLogSave(GetWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken)
 	{
-		using var conn = await _dbConnection.GetCoreMerchantConnection(cancellationToken);
+		using var conn = await dbConnection.GetCoreTransactionConnection(cancellationToken);
 		var parameters = new DynamicParameters();
-		parameters.Add("@Payload", webhookLogRequest.Payload);
+		parameters.Add("@Payload", webhookLogRequest.Payload, DbType.String);
 
-		return 1;
-		//return await conn.ExecuteAsync(DbQueries.WebhoookLogSave,
-		//	parameters, commandType: CommandType.Text);
+		return await conn.ExecuteAsync(DbQueries.WebhookLogSave,
+		parameters, commandType: CommandType.Text);
 	}
+ 
 }
