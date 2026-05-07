@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {}
+    "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj": {
+    "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
+        "projectUniqueName": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
         "projectName": "DPP.InternalWebhookHost.Domain",
-        "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
-        "packagesPath": "C:\\Users\\VIKRAM\\.nuget\\packages\\",
-        "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\obj\\",
+        "projectPath": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\VIKRAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,9 +26,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "http://fw1-p-tfs02:8080/tfs/GatewayServices/_packaging/0c53cce0-f778-4ef6-83f6-216eb1613ae6/nuget/v3/index.json": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://fw1-p-tfs02.faps.net/tfs/GatewayServices/_packaging/Faps_Core_Packages/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -101,24 +101,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {
+    "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "projectUniqueName": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
         "projectName": "DPP.InternalWebhookHost.Infrastructure",
-        "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\VIKRAM\\.nuget\\packages\\",
-        "outputPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\obj\\",
+        "projectPath": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\DPP.InternalWebhookHost.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\VIKRAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -127,16 +127,16 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "http://fw1-p-tfs02:8080/tfs/GatewayServices/_packaging/0c53cce0-f778-4ef6-83f6-216eb1613ae6/nuget/v3/index.json": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://fw1-p-tfs02.faps.net/tfs/GatewayServices/_packaging/Faps_Core_Packages/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj": {
-                "projectPath": "D:\\Abdullah M\\FAPS\\git\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj"
+              "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj": {
+                "projectPath": "E:\\DPP.InternalWebhookHostApi\\DPP.InternalWebhookHost.Domain\\DPP.InternalWebhookHost.Domain.csproj"
               }
             }
           }
@@ -214,7 +214,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
