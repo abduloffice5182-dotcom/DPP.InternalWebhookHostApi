@@ -22,7 +22,7 @@ public class WebhookRepository : IWebhookRepository
     public async Task<(int TotalCount, IEnumerable<dynamic> Items)> GetWebhookReportAsync(DateTime? start, DateTime? end, int pageNumber, int pageSize, CancellationToken ct)
     {
         using var conn = await dbConnection.GetCoreTransactionConnection(ct);
-        int ps = pageSize > 0 ? pageSize : 5;
+        int ps = pageSize > 0 ? pageSize : 10;
 
         using var multi = await conn.QueryMultipleAsync(WebhookQueries.GetWebhooklLogs, new
         {
