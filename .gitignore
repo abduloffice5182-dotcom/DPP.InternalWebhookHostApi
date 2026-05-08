@@ -1,26 +1,27 @@
 ﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+# Visual Studio / .NET
 ################################################################################
 
+# Build folders
+bin/
+obj/
 
-/DPP.InternalWebhookHost.Api/.vs
-/DPP.InternalWebhookHost.Api/obj
-/DPP.InternalWebhookHost.Api/bin
+# Visual Studio
+.vs/
+*.user
+*.suo
 
+# Logs
+logs/
+*.log
 
-/DPP.InternalWebhookHost.Application/.vs
-/DPP.InternalWebhookHost.Application/obj
-/DPP.InternalWebhookHost.Application/bin
+# Test results
+TestResults/
 
-/DPP.InternalWebhookHost.Domain/.vs
-/DPP.InternalWebhookHost.Domain/obj
-/DPP.InternalWebhookHost.Domain/bin
+# Rider / VS Code
+.idea/
+.vscode/
 
-/DPP.InternalWebhookHost.Infrastructure/.vs
-/DPP.InternalWebhookHost.Infrastructure/obj
-/DPP.InternalWebhookHost.Infrastructure/bin
-
-/DPP.InternalWebhookHost.Test/.vs
-/DPP.InternalWebhookHost.Test/obj
-/DPP.InternalWebhookHost.Test/bin
-/DPP.InternalWebhookHost.Tests
+# OS files
+Thumbs.db
+.DS_Store
