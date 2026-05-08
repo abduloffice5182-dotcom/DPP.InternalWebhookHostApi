@@ -1,21 +1,17 @@
 ﻿namespace DPP.InternalWebhookHost.Infrastructure;
 public static class DbQueries
 {
-    public const string WebhookLogSave = @"
+	public const string WebhookLogSave = @"
             INSERT INTO [CoreTransaction].[dbo].[WebHookPayloads]
-            (
-                [DateReceived],
-                [DateTimeReceived],
+            ( 
                 [Payload]
             )
             VALUES
-            (
-                CAST(GETDATE() AS DATE),
-                GETDATE(),
+            ( 
                 @Payload
             );";
 
-    public const string GetWebhooklLogs = @"
+	public const string GetWebhooklLogs = @"
     SELECT 
         Id, 
         DateTimeReceived AS ReceivedAt, 
