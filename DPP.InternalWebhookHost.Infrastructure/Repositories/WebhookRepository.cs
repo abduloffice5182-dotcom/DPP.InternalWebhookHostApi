@@ -22,15 +22,18 @@ public class WebhookRepository : IWebhookRepository
     public async Task<(int TotalCount, IEnumerable<dynamic> Items)> GetWebhookReportAsync(DateTime? start, DateTime? end, int pageNumber, int pageSize, CancellationToken ct)
     {
         using var conn = await dbConnection.GetCoreTransactionConnection(ct);
-        int ps = pageSize > 0 ? pageSize : 10;
-        var items = (await conn.QueryAsync(WebhookQueries.GetWebhooklLogs, new
+        int ps = pageSize > 0 ? pageSize : 5;
+
+        using var multi = await conn.QueryMultipleAsync(WebhookQueries.GetWebhooklLogs, new
         {
             StartDateTime = start,
             EndDateTime = end,
             Offset = (pageNumber > 0 ? pageNumber - 1 : 0) * ps,
             PageSize = ps
-        })).ToList();
+        });
 
-        return (items.FirstOrDefault()?.TotalCount ?? 0, items);
+        int total = await multi.ReadFirstAsync<int>();
+        var items = await multi.ReadAsync<dynamic>();
+        return (total, items);
     }
 }

@@ -21,15 +21,15 @@ public class WebhookController : ControllerBase
 		try
 		{
 
-            if (request.FilterStartDatetime > request.FilterEndDatetime)
+            if (request.FromDate > request.ToDate)
                 return BadRequest(new { Message = "Start date cannot be greater than end date." });
-            if (request.FilterEndDatetime.TimeOfDay == TimeSpan.Zero)
-                request.FilterEndDatetime = request.FilterEndDatetime.Date.AddDays(1).AddTicks(-1);
+            if (request.ToDate.TimeOfDay == TimeSpan.Zero)
+                request.ToDate = request.ToDate.Date.AddDays(1).AddTicks(-1);
 
             var query = new GetWebhookReportQuery
 			{
-				FilterStartDatetime = request.FilterStartDatetime,
-				FilterEndDatetime = request.FilterEndDatetime,
+                FromDate = request.FromDate,
+                ToDate = request.ToDate,
 				PageNumber = request.PageNumber,
 				PageSize = request.PageSize
 			};

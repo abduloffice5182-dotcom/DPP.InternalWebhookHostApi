@@ -4,7 +4,7 @@ namespace DPP.InternalWebhookHost.Domain.Common.Response;
 public record ApiResponse
 (
 	bool Success,
-	int HttpStatusCode,
+	int StatusCode,
 	string? Message,
-	dynamic? Response
+	dynamic? Data
 );

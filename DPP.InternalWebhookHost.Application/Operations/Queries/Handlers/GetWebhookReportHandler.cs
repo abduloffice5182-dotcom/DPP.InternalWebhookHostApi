@@ -15,8 +15,8 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, Ap
 
     public async Task<ApiResponse> Handle(GetWebhookReportQuery req, CancellationToken ct) =>
      await repository.GetWebhookReportAsync(
-         req.FilterStartDatetime == default ? null : req.FilterStartDatetime,
-         req.FilterEndDatetime == default ? null : req.FilterEndDatetime,
+         req.FromDate == default ? null : req.FromDate,
+         req.ToDate == default ? null : req.ToDate,
          req.PageNumber, req.PageSize, ct)
      .ContinueWith(t => new ApiResponse(true, 200, "Success", new
      {
