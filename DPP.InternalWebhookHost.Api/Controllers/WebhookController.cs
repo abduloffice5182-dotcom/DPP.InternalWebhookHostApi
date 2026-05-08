@@ -35,9 +35,11 @@ public class WebhookController : ControllerBase
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, "Error while Saving Webhook Payload {0}", ex);
+			logger.LogError(ex, "Error While Fetch the Webhook Logs ,(GetWebhookReportQuery) :{0}", request);
+
+			return new ObjectResult(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error While Fetch the Webhook Logs", null));
 		}
-		return Ok();
+
 	}
 	#endregion
 
@@ -50,11 +52,10 @@ public class WebhookController : ControllerBase
 		try
 		{
 			Request.EnableBuffering();
-			using (var reader = new StreamReader(
-				Request.Body,
-				Encoding.UTF8,
-				detectEncodingFromByteOrderMarks: false,
-				leaveOpen: true))
+			using (var reader = new StreamReader(Request.Body
+				,Encoding.UTF8
+				,detectEncodingFromByteOrderMarks: false
+				,leaveOpen: true))
 			{
 				requestBody = await reader.ReadToEndAsync();
 				Request.Body.Position = 0;
@@ -75,7 +76,8 @@ public class WebhookController : ControllerBase
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, "Error while Saving Webhook Payload {0}", requestBody);
+			logger.LogError(ex, "Error while Saving Webhook Payload ,(dynamic) : {0}", requestBody);
+
 			return Ok(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error while Saving Webhook Payload", null));
 		}
 

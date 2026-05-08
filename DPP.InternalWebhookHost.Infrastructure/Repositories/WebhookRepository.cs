@@ -1,4 +1,6 @@
-﻿namespace DPP.InternalWebhookHost.Infrastructure.Repositories;
+﻿using DPP.InternalWebhookHost.Infrastructure.Constants.DatabaseQueries.Webhook;
+
+namespace DPP.InternalWebhookHost.Infrastructure.Repositories;
 public class WebhookRepository : IWebhookRepository
 {
     private readonly IDbConnectionFactory dbConnection;
@@ -12,7 +14,7 @@ public class WebhookRepository : IWebhookRepository
         var parameters = new DynamicParameters();
         parameters.Add("@Payload", webhookLogRequest.Payload, DbType.String);
 
-        return await conn.ExecuteAsync(DbQueries.WebhookLogSave,
+        return await conn.ExecuteAsync(WebhookQueries.WebhookLogSave,
         parameters, commandType: CommandType.Text);
     }
 
@@ -24,7 +26,7 @@ public class WebhookRepository : IWebhookRepository
         int validPageSize = pageSize > 0 ? pageSize : 10;
         int validOffset = (pageNumber > 0 ? pageNumber - 1 : 0) * validPageSize;
 
-        var items = (await conn.QueryAsync<dynamic>(DbQueries.GetWebhooklLogs, new
+        var items = (await conn.QueryAsync<dynamic>(WebhookQueries.GetWebhooklLogs, new
         {
             StartDateTime = start,
             EndDateTime = end,

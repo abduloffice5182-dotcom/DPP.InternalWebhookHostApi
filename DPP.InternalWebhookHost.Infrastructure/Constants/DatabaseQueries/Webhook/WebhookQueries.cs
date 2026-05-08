@@ -1,5 +1,5 @@
-﻿namespace DPP.InternalWebhookHost.Infrastructure;
-public static class DbQueries
+﻿namespace DPP.InternalWebhookHost.Infrastructure.Constants.DatabaseQueries.Webhook;
+public static class WebhookQueries
 {
 	public const string WebhookLogSave = @"
             INSERT INTO [CoreTransaction].[dbo].[WebHookPayloads]
