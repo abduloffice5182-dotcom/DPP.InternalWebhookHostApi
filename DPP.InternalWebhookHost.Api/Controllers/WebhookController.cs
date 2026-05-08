@@ -15,12 +15,18 @@ public class WebhookController : ControllerBase
 
 	#region GET
 	[HttpGet]
-	[Route("get")]
-	public async Task<IActionResult> Get([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
+	[Route("report")]
+	public async Task<IActionResult> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
 	{
 		try
 		{
-			var query = new GetWebhookReportQuery
+
+            if (request.FilterStartDatetime > request.FilterEndDatetime)
+                return BadRequest(new { Message = "Start date cannot be greater than end date." });
+            if (request.FilterEndDatetime.TimeOfDay == TimeSpan.Zero)
+                request.FilterEndDatetime = request.FilterEndDatetime.Date.AddDays(1).AddTicks(-1);
+
+            var query = new GetWebhookReportQuery
 			{
 				FilterStartDatetime = request.FilterStartDatetime,
 				FilterEndDatetime = request.FilterEndDatetime,
@@ -29,23 +35,21 @@ public class WebhookController : ControllerBase
 			};
 
 			var response = await mediator.Send(query, cancellationToken);
-
 			return Ok(response);
 
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, "Error While Fetch the Webhook Logs ,(GetWebhookReportQuery) :{0}", request);
-
-			return new ObjectResult(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error While Fetch the Webhook Logs", null));
-		}
+			logger.LogError(ex, "Get Reports has failed ,(GetWebhookReportQuery) :{Message}", request);
+            return StatusCode(500, new ApiResponse(false, 500, "Error while fetching the webhook logs", null));
+        }
 
 	}
 	#endregion
 
 	#region POST
 	[HttpPost]
-	[Route("post")]
+	[Route("save")]
 	public async Task<IActionResult> Post(CancellationToken cancellationToken)
 	{
 		string requestBody = string.Empty;

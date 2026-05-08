@@ -13,29 +13,17 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, Ap
         this.repository = repository;
     }
 
-    public async Task<ApiResponse> Handle(GetWebhookReportQuery request, CancellationToken cancellationToken)
-    {
-        DateTime? start = request.FilterStartDatetime == default ? null : request.FilterStartDatetime;
-        DateTime? end = request.FilterEndDatetime == default ? null : request.FilterEndDatetime;
-        var result = await repository.GetWebhookReportAsync(start, end, request.PageNumber, request.PageSize, cancellationToken);
-        return new ApiResponse
-    (
-        Success: true,
-        HttpStatusCode: 200,
-        Message: "Webhook report retrieved successfully.",
-        Response: new
-        {
-            result.TotalCount,
-            Items = result.Items.Select(x => new
-            {
-                x.Id,
-                x.ReceivedAt,
-                x.Data
-            }).ToList(),
-            request.PageNumber,
-            request.PageSize
-        }
-    );
-    }
+    public async Task<ApiResponse> Handle(GetWebhookReportQuery req, CancellationToken ct) =>
+     await repository.GetWebhookReportAsync(
+         req.FilterStartDatetime == default ? null : req.FilterStartDatetime,
+         req.FilterEndDatetime == default ? null : req.FilterEndDatetime,
+         req.PageNumber, req.PageSize, ct)
+     .ContinueWith(t => new ApiResponse(true, 200, "Success", new
+     {
+         t.Result.TotalCount,
+         Items = t.Result.Items.Select(x => new { x.Id, x.ReceivedAt, x.Data }),
+         req.PageNumber,
+         req.PageSize
+     }));
 
 }
