@@ -21,7 +21,7 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, Ap
      .ContinueWith(t => new ApiResponse(true, 200, "Success", new
      {
          t.Result.TotalCount,
-         Items = t.Result.Items.Select(x => new { x.Id, x.ReceivedAt, x.Data }),
+         Items = t.Result.Items.Select(x => new { x.Id, x.ReceivedAt, x.Data,x.QueryString,x.Endpoint }),
          req.PageNumber,
          req.PageSize
      }));
