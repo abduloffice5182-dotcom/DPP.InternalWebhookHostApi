@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DPP.InternalWebhookHost.Domain.Common.Response; // For ApiResponse<T>
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using FluentValidation;
 
 namespace DPP.InternalWebhookHost.Api.Middlewares;
 
@@ -10,37 +12,55 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
     {
         try
         {
+            context.Request.EnableBuffering();
             await next(context);
+            await HandlePipelineErrorsAsync(context);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An error occurred during {Method} request for {Path}. Message: {Message}",
-            context.Request.Method,
-            context.Request.Path,
-            ex.Message);
-
-            await HandleExceptionAsync(context, ex);
+            await LogAndHandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private async Task HandlePipelineErrorsAsync(HttpContext context)
     {
-        var (statusCode, message) = exception switch
+        if (context.Response.StatusCode == StatusCodes.Status401Unauthorized ||
+            context.Response.StatusCode == StatusCodes.Status403Forbidden)
         {
-            FluentValidation.ValidationException valEx => (400, string.Join(" ", valEx.Errors.Select(e => e.ErrorMessage))),
-            ArgumentException => (400, exception.Message),
-            _ => (500, "An internal error occurred.")
+            if (!context.Response.HasStarted)
+            {
+                var message = context.Response.StatusCode == 401 ? "Unauthorized Access" : "Forbidden Access";
+                await WriteErrorResponseAsync(context, context.Response.StatusCode, message);
+            }
+        }
+    }
+
+    private async Task LogAndHandleExceptionAsync(HttpContext context, Exception ex)
+    {
+        logger.LogError(ex, "Exception caught in middleware: {Message} at {Path}", ex.Message, context.Request.Path);
+
+        var (statusCode, message) = ex switch
+        {
+            ValidationException valEx => (StatusCodes.Status400BadRequest, string.Join(" | ", valEx.Errors.Select(e => e.ErrorMessage))),
+            ArgumentException or InvalidOperationException => (StatusCodes.Status400BadRequest, ex.Message),
+            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "You are not authorized to perform this action."),
+            _ => (StatusCodes.Status500InternalServerError, "An unexpected internal server error occurred.")
         };
 
+        await WriteErrorResponseAsync(context, statusCode, message);
+    }
+
+    private static Task WriteErrorResponseAsync(HttpContext context, int statusCode, string message)
+    {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
-        var response = new
-        {
-            success = false,
-            statusCode = statusCode,
-            message = message,
-            data = (object?)null
-        };
+
+        var response = new ApiResponse<object>(
+            Success: false,
+            StatusCode: statusCode,
+            Message: message,
+            Data: null
+        );
 
         return context.Response.WriteAsJsonAsync(response);
     }
