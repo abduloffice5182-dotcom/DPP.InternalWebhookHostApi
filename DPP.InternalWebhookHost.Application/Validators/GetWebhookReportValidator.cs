@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
-using DPP.InternalWebhookHost.Application.Operations.Queries.Validators; 
 using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
 
-namespace DPP.InternalWebhookHost.Application.Operations.Queries.Validators;
+namespace DPP.InternalWebhookHost.Application.Validators;
 
 public class GetWebhookReportValidator : AbstractValidator<GetWebhookReportQuery>
 {

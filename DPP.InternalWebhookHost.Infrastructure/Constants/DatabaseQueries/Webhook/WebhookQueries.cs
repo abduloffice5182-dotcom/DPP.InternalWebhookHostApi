@@ -7,6 +7,7 @@ public static class WebhookQueries
                                                 VALUES
                                                 ( NEWID(), @Payload, @QueryString, @Endpoint );";
 
+
     public const string GetWebhooklLogs = @"SELECT Id, DateTimeReceived AS ReceivedAt, Payload AS Data, QueryString, Endpoint
                                             INTO #TempFilteredLogs
                                             FROM WebhookPayloads WITH (NOLOCK)
@@ -20,6 +21,7 @@ public static class WebhookQueries
                                             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
                                             DROP TABLE IF EXISTS #TempFilteredLogs;";
+
 }
 
 

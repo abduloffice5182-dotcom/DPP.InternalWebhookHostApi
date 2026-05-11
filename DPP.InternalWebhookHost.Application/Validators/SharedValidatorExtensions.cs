@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using DPP.InternalWebhookHost.Application.Common.Interfaces;
 
-namespace DPP.InternalWebhookHost.Application.Operations.Queries.Validators;
+namespace DPP.InternalWebhookHost.Application.Validators;
 
 public static class SharedValidatorExtensions
 {
