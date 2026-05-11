@@ -45,46 +45,44 @@ public class WebhookController : ControllerBase
         }
 
 	}
-	#endregion
+	#endregion 
 
-	#region POST
-	[HttpPost]
-	[Route("save")]
-	public async Task<IActionResult> Post(CancellationToken cancellationToken)
-	{
-		string requestBody = string.Empty;
-		try
-		{
-			Request.EnableBuffering();
-			using (var reader = new StreamReader(Request.Body
-				,Encoding.UTF8
-				,detectEncodingFromByteOrderMarks: false
-				,leaveOpen: true))
-			{
-				requestBody = await reader.ReadToEndAsync();
-				Request.Body.Position = 0;
-			}
+    #region POST
+    [HttpPost]
+    [Route("{endpointId}")]
+    public async Task<IActionResult> Post(string endpointId ,CancellationToken cancellationToken)
+    {
+        string requestBody = string.Empty;
+        try
+        {
+            Request.EnableBuffering();
+            using (var reader = new StreamReader(Request.Body
+                , Encoding.UTF8
+                , detectEncodingFromByteOrderMarks: false
+                , leaveOpen: true))
+            {
+                requestBody = await reader.ReadToEndAsync();
+                Request.Body.Position = 0;
+            }
 
-			logger.LogInformation("Webhook Payload : {0}", requestBody);
-			if (string.IsNullOrWhiteSpace(requestBody))
-			{
-				return Ok(new ApiResponse(Success: false, (int)HttpStatusCode.BadRequest, "Payload is Empty", null));
-			}
+            logger.LogInformation("Webhook Payload : {0}", requestBody); 
 
-			var response = await mediator.Send(new SaveWebhookCommand
-			{
-				Payload = requestBody
-			}, cancellationToken);
+            var response = await mediator.Send(new SaveWebhookCommand
+            {
+                Payload = requestBody,
+				QueryString = Request.QueryString.Value,
+				Endpoint =$"{Request.Path.Value}"
+            }, cancellationToken);
 
-			return Ok(new ApiResponse(true, (int)HttpStatusCode.OK, "Payload Recieved Successfully", response));
-		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, "Error while Saving Webhook Payload ,(dynamic) : {0}", requestBody);
+            return Ok(new ApiResponse(true, (int)HttpStatusCode.OK, "Payload Recieved Successfully", $"Webhook Refernce Id : {response.ToString()}"));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while Saving Webhook Payload ,(dynamic) : {0}", requestBody);
 
-			return Ok(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error while Saving Webhook Payload", null));
-		}
+            return Ok(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error while Saving Webhook Payload", null));
+        }
 
-	}
-	#endregion
+    }
+    #endregion
 }

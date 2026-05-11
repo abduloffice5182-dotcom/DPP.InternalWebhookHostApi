@@ -8,13 +8,15 @@ public class WebhookRepository : IWebhookRepository
     {
         this.dbConnection = dbConnection;
     }
-    public async Task<int> WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken)
+    public async Task<Guid> WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken)
     {
         using var conn = await dbConnection.GetCoreTransactionConnection(cancellationToken);
         var parameters = new DynamicParameters();
         parameters.Add("@Payload", webhookLogRequest.Payload, DbType.String);
+        parameters.Add("@QueryString", webhookLogRequest.QueryString, DbType.String);
+        parameters.Add("@Endpoint", webhookLogRequest.Endpoint, DbType.String);
 
-        return await conn.ExecuteAsync(WebhookQueries.WebhookLogSave,
+        return await conn.ExecuteScalarAsync<Guid>(WebhookQueries.WebhookLogSave,
         parameters, commandType: CommandType.Text);
     }
 
