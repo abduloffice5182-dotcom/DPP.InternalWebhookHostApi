@@ -31,7 +31,7 @@ builder.Services.AddRouting(options =>
 
 
 var app = builder.Build();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();

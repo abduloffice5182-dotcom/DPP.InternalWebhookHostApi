@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace DPP.InternalWebhookHost.Api.Middlewares;
 
-public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+public class GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
 {
     public async Task Invoke(HttpContext context)
     {
@@ -37,7 +37,7 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
 
     private async Task LogAndHandleExceptionAsync(HttpContext context, Exception ex)
     {
-        logger.LogError(ex, "Exception caught in middleware: {Message} at {Path}", ex.Message, context.Request.Path);
+        logger.LogError(ex, "Exception caught in middleware: {0} at {1}", ex, context.Request.Path);
 
         var (statusCode, message) = ex switch
         {
