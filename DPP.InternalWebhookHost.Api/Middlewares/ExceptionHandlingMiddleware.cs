@@ -29,7 +29,7 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         {
             FluentValidation.ValidationException valEx => (400, string.Join(" ", valEx.Errors.Select(e => e.ErrorMessage))),
             ArgumentException => (400, exception.Message),
-            _ => (500, "An internal error occurred.ex :{exception.Message}")
+            _ => (500, "An internal error occurred.")
         };
 
         context.Response.ContentType = "application/json";
