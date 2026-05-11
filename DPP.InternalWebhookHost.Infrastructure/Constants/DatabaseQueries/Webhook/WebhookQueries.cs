@@ -7,19 +7,23 @@ public static class WebhookQueries
                                                 VALUES
                                                 ( NEWID(), @Payload, @QueryString, @Endpoint );";
 
-    public const string GetWebhooklLogs = @" SELECT Id, DateTimeReceived, Payload,QueryString,Endpoint
-                                                INTO #TempLogs FROM WebhookPayloads WITH (NOLOCK)
-                                                WHERE (@StartDateTime IS NULL OR DateTimeReceived >= @StartDateTime)
-                                                AND (@EndDateTime IS NULL OR DateTimeReceived <= @EndDateTime);
-                                                SELECT COUNT(*)  FROM #TempLogs;
-                                                SELECT Id, DateTimeReceived AS ReceivedAt, Payload AS Data, QueryString, Endpoint
-                                                FROM #TempLogs
-                                                ORDER BY DateTimeReceived DESC
-                                                OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
+    public const string GetWebhooklLogs = @"WITH FilteredLogs AS (
+    SELECT Id, DateTimeReceived AS ReceivedAt, Payload AS Data, QueryString, Endpoint
+    FROM WebhookPayloads WITH (NOLOCK)
+    WHERE (@StartDateTime IS NULL OR DateTimeReceived >= @StartDateTime)
+      AND (@EndDateTime IS NULL OR DateTimeReceived <= @EndDateTime)
+)
+SELECT COUNT(*) FROM FilteredLogs;
 
-                                                DROP TABLE IF EXISTS #TempLogs
-;
-;";
+WITH FilteredLogs AS (
+    SELECT Id, DateTimeReceived AS ReceivedAt, Payload AS Data, QueryString, Endpoint
+    FROM WebhookPayloads WITH (NOLOCK)
+    WHERE (@StartDateTime IS NULL OR DateTimeReceived >= @StartDateTime)
+      AND (@EndDateTime IS NULL OR DateTimeReceived <= @EndDateTime)
+)
+SELECT * FROM FilteredLogs
+ORDER BY ReceivedAt DESC
+OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;";
 }
 
 

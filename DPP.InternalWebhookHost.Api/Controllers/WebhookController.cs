@@ -22,32 +22,8 @@ public class WebhookController : ControllerBase
 	[Route("report")]
 	public async Task<IActionResult> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
 	{
-		try
-		{
-
-			if (request.FromDate > request.ToDate)
-				return BadRequest(new { Message = "Start date cannot be greater than end date." });
-			if (request.ToDate.TimeOfDay == TimeSpan.Zero)
-				request.ToDate = request.ToDate.Date.AddDays(1).AddTicks(-1);
-
-			var query = new GetWebhookReportQuery
-			{
-				FromDate = request.FromDate,
-				ToDate = request.ToDate,
-				PageNumber = request.PageNumber,
-				PageSize = request.PageSize
-			};
-
-			var response = await mediator.Send(query, cancellationToken);
+			var response = await mediator.Send(request, cancellationToken);
 			return Ok(response);
-
-		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, "Get Reports has failed ,(GetWebhookReportQuery) :{Message}", request);
-			return StatusCode(500, new ApiResponse(false, 500, "Error while fetching the webhook logs", null));
-		}
-
 	}
 	#endregion
 
@@ -85,13 +61,13 @@ public class WebhookController : ControllerBase
 				Endpoint = $"{Request.Path.Value}"
 			}, cancellationToken);
 
-			return Ok(new ApiResponse(true, (int)HttpStatusCode.OK, "Payload Recieved Successfully", $"Webhook Refernce Id : {response.ToString()}"));
+			return Ok(new ApiResponse<object>(true, (int)HttpStatusCode.OK, "Payload Recieved Successfully", $"Webhook Refernce Id : {response.ToString()}"));
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, "Error while Saving Webhook Payload ,(dynamic) : {0}", requestBody);
 
-			return Ok(new ApiResponse(false, (int)HttpStatusCode.InternalServerError, "Error while Saving Webhook Payload", null));
+			return Ok(new ApiResponse<object>(false, (int)HttpStatusCode.InternalServerError, "Error while Saving Webhook Payload", null));
 		}
 
 	}

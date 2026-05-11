@@ -1,10 +1,8 @@
-﻿
-
-namespace DPP.InternalWebhookHost.Domain.Common.Response;
-public record ApiResponse
+﻿namespace DPP.InternalWebhookHost.Domain.Common.Response;
+public record ApiResponse<T>
 (
 	bool Success,
 	int StatusCode,
 	string? Message,
-	dynamic? Data
+	T? Data
 );
