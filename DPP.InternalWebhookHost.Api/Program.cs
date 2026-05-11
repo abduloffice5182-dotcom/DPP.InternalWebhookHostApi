@@ -1,7 +1,7 @@
 using DPP.InternalWebhookHost.Api.Middlewares;
-using DPP.InternalWebhookHost.Application.Operations.Queries.Validators;
 using FluentValidation;
 using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
+using DPP.InternalWebhookHost.Application.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
