@@ -13,7 +13,7 @@ namespace DPP.InternalWebhookHost.Api.Extension;
 		{
 			services.AddSingleton(logger);
 			services.AddInfrastructureServices();
-		services.AddApplicationServices();
+			services.AddApplicationServices();
 		}
 	}
 

@@ -7,9 +7,12 @@ public static class ApplicationServiceExtensions
 {
 	public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 	{
-		// Register all MediatR handlers from Application layer
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-		services.AddHttpClient();
+        services.AddMediatR(cfg => {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
+
+        services.AddHttpClient();
 
 		return services;
 	}

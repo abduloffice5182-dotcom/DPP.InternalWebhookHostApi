@@ -1,3 +1,8 @@
+using DPP.InternalWebhookHost.Api.Middlewares;
+using DPP.InternalWebhookHost.Application.Operations.Queries.Validators;
+using FluentValidation;
+using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration; 
@@ -14,11 +19,9 @@ Log.Logger = new LoggerConfiguration()
 	.CreateLogger();
 
 builder.Host.UseSerilog(Log.Logger);
-
+builder.Services.AddValidatorsFromAssemblyContaining<GetWebhookReportValidator>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.RegisterDI(Log.Logger);
 builder.Services.RegisterServices(configuration);
 builder.Services.AddRouting(options =>
@@ -28,7 +31,7 @@ builder.Services.AddRouting(options =>
 
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
