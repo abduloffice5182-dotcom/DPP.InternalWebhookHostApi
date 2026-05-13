@@ -1,25 +1,21 @@
-using DPP.InternalWebhookHost.Api.Middlewares;
-using FluentValidation;
-using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
-using DPP.InternalWebhookHost.Application.Validators;
+using DPP.InternalWebhookHost.Infrastructure.Constants.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var configuration = builder.Configuration; 
-builder.Services.AddControllers(); 
+var configuration = builder.Configuration;
+builder.Services.AddControllers();
 builder.Services.AddApiVersioning(options =>
 {
 	options.DefaultApiVersion = new ApiVersion(1, 0);
 	options.AssumeDefaultVersionWhenUnspecified = true;
 	options.ReportApiVersions = true;
 });
- 
+
 Log.Logger = new LoggerConfiguration()
 	.ReadFrom.Configuration(configuration)
 	.CreateLogger();
 
 builder.Host.UseSerilog(Log.Logger);
-builder.Services.AddValidatorsFromAssemblyContaining<GetWebhookReportValidator>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterDI(Log.Logger);
@@ -30,7 +26,15 @@ builder.Services.AddRouting(options =>
 });
 
 
+//default value 30Mb
+builder.WebHost.ConfigureKestrel(options =>
+{
+	options.Limits.MaxRequestBodySize = (configuration.GetValue<int?>(ApiConfigurationConstant.MaximumRequestSizeMB) ?? 30) * 1024 * 1024; 
+});
+ 
 var app = builder.Build();
+app.UseSerilogRequestLogging();
+
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
@@ -40,8 +44,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseResponseCompression();
 app.UseAuthorization();
 
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();

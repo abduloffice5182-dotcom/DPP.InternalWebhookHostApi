@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
 using System.Reflection;
 
 namespace DPP.InternalWebhookHost.Api;
@@ -28,6 +30,7 @@ public static class ServiceCollectionExtensions
 		AddCors(services, configuration);
 		ConfigureApplicationCookie(services);
 		ConfigureHealthChecks(services);
+		AddCompression(services);
 	}
 
 	private static void ConfigureHealthChecks(IServiceCollection services)
@@ -113,5 +116,27 @@ public static class ServiceCollectionExtensions
 				}
 			});
 		});
+	}
+	static void AddCompression(IServiceCollection services)
+	{
+		services.AddResponseCompression(options =>
+		{
+			// Works for HTTPS also
+			options.EnableForHttps = true;
+
+			// Add compression providers
+			options.Providers.Add<GzipCompressionProvider>();
+			//options.Providers.Add<BrotliCompressionProvider>();
+		});
+
+		services.Configure<GzipCompressionProviderOptions>(options =>
+		{
+			options.Level = CompressionLevel.Fastest;
+		});
+
+		//builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+		//{
+		//	options.Level = CompressionLevel.Fastest;
+		//}); 
 	}
 }

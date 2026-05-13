@@ -16,4 +16,4 @@ global using DPP.InternalWebhookHost.Api.Extension;
 global using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
 global using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
 global using DPP.InternalWebhookHost.Domain.Common.Response;
-
+global using DPP.InternalWebhookHost.Api.Middlewares;
