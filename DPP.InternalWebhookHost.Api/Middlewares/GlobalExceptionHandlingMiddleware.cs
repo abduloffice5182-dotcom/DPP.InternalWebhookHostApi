@@ -2,58 +2,90 @@
 
 public class GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
 {
-    public async Task Invoke(HttpContext context)
-    {
-        try
-        {
-            context.Request.EnableBuffering();
-            await next(context);
-            await HandlePipelineErrorsAsync(context);
-        }
-        catch (Exception ex)
-        {
-            await LogAndHandleExceptionAsync(context, ex);
-        }
-    }
+	public async Task Invoke(HttpContext context)
+	{
+		try
+		{
+			await next(context);
+		}
+		catch (Exception ex)
+		{
+			await LogAndHandleExceptionAsync(context, ex);
+		}
+	}
 
-    private async Task HandlePipelineErrorsAsync(HttpContext context)
-    {
-        if (context.Response.StatusCode == StatusCodes.Status401Unauthorized ||
-            context.Response.StatusCode == StatusCodes.Status403Forbidden)
-        {
-			if (!context.Response.HasStarted)
-            {
-                var message = context.Response.StatusCode == 401 ? "Unauthorized Access" : "Forbidden Access";
-                await WriteErrorResponseAsync(context, context.Response.StatusCode, message);
-            }
-        }
-    }
+	private async Task LogAndHandleExceptionAsync(
+	HttpContext context,
+	Exception ex)
+	{
+		context.Request.EnableBuffering();
+		string requestBody = string.Empty;
+		if (context.Request.ContentLength > 0)
+		{
+			context.Request.Body.Position = 0;
+			using var reader = new StreamReader(
+				context.Request.Body,
+				Encoding.UTF8,
+				detectEncodingFromByteOrderMarks: false,
+				leaveOpen: true);
+			requestBody = await reader.ReadToEndAsync();
+			context.Request.Body.Position = 0;
+		}
+		var queryString = context.Request.QueryString.Value;
+		var path = context.Request.Path;
+		var headers = string.Join(
+			Environment.NewLine,
+			context.Request.Headers.Select(x =>
+				$"{x.Key} : {x.Value}"));
+		var userAgent =
+			context.Request.Headers.UserAgent.ToString();
+		var (statusCode, message) = ex switch
+		{
+			ValidationException valEx =>
+				(
+					StatusCodes.Status400BadRequest,
+					string.Join(" | ",
+						valEx.Errors.Select(e => e.ErrorMessage))
+				),
 
-    private async Task LogAndHandleExceptionAsync(HttpContext context, Exception ex)
-    {
-        logger.LogError(ex, "Exception caught in middleware: {0} at {1}", ex, context.Request.Path);
+			ArgumentException or
+			InvalidOperationException or
+			BadHttpRequestException =>
+				(
+					StatusCodes.Status400BadRequest,
+					ex.Message
+				),
 
-        var (statusCode, message) = ex switch
-        {
-            ValidationException valEx => (StatusCodes.Status400BadRequest, string.Join(" | ", valEx.Errors.Select(e => e.ErrorMessage))),
-            ArgumentException or InvalidOperationException => (StatusCodes.Status400BadRequest, ex.Message),
-            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "You are not authorized to perform this action."),
-            _ => (StatusCodes.Status500InternalServerError, "An unexpected internal server error occurred.")
-        };
+			UnauthorizedAccessException =>
+				(
+					StatusCodes.Status401Unauthorized,
+					"You are not authorized to perform this action."
+				),
 
-        await WriteErrorResponseAsync(context, statusCode, message);
-    }
+			_ =>
+				(
+					StatusCodes.Status500InternalServerError,
+					"An unexpected internal server error occurred."
+				)
+		};
 
-    private static Task WriteErrorResponseAsync(HttpContext context, int statusCode, string message)
-    {
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = statusCode;
+		logger.LogError(ex,
+			@"Exception Occurred StatusCode : {StatusCode} , Message : {Message} ,Path : {Path},
+QueryString : {QueryString},UserAgent : {UserAgent} ,Headers :{Headers},Payload :{Payload},StackTrace :
+{StackTrace}", statusCode, message, path, queryString, userAgent, headers, requestBody, ex.StackTrace);
 
-        var response = new ApiResponse<object>( 
-            Message: message,
-            Data: null
-        );
+		await WriteErrorResponseAsync(
+			context,
+			statusCode,
+			message);
+	}
 
-        return context.Response.WriteAsJsonAsync(response);
-    }
+	private static Task WriteErrorResponseAsync(HttpContext context, int statusCode, string errorMessage)
+	{
+		context.Response.ContentType = "application/json";
+		context.Response.StatusCode = statusCode; 
+		var response = new ApiResponse<object>(null, null, errorMessage);
+
+		return context.Response.WriteAsJsonAsync(response);
+	}
 }

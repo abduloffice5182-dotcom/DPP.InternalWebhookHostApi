@@ -1,20 +1,5 @@
-
-
 var builder = WebApplication.CreateBuilder(args);
-
 var configuration = builder.Configuration;
-builder.Services.AddControllers()
-	.AddJsonOptions(options =>
-	{
-		options.JsonSerializerOptions.DefaultIgnoreCondition =
-			System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
-	});
-builder.Services.AddApiVersioning(options =>
-{
-	options.DefaultApiVersion = new ApiVersion(1, 0);
-	options.AssumeDefaultVersionWhenUnspecified = true;
-	options.ReportApiVersions = true;
-});
 
 Log.Logger = new LoggerConfiguration()
 	.ReadFrom.Configuration(configuration)
@@ -23,7 +8,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog(Log.Logger);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.RegisterDI(Log.Logger);
+builder.Services.RegisterDI();
 builder.Services.RegisterServices(configuration);
 builder.Services.AddRouting(options =>
 {
@@ -49,7 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseResponseCompression();
+//app.UseResponseCompression();
 app.UseAuthorization();
 
 app.MapHealthChecks("/health");

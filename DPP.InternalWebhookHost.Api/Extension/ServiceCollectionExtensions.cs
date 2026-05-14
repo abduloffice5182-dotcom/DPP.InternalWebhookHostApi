@@ -3,13 +3,14 @@ public static class ServiceCollectionExtensions
 {
 	public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
 	{
-		services.AddMvcCore();
-
-		services.AddControllers().AddJsonOptions(x =>
-		x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
-		);
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 		services.AddEndpointsApiExplorer();
+		services.AddControllers()
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.DefaultIgnoreCondition =
+			System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+	});
 
 		AddSwaggerGen(services);
 		AddApiVersioning(services);
@@ -24,7 +25,7 @@ public static class ServiceCollectionExtensions
 		services.AddHealthChecks();
 	}
 
-	private static void ConfigureApplicationCookie(this IServiceCollection services)
+	private static void ConfigureApplicationCookie(IServiceCollection services)
 	{
 		services.ConfigureApplicationCookie(options =>
 		{
@@ -49,8 +50,7 @@ public static class ServiceCollectionExtensions
 			 options.SubstituteApiVersionInUrl = true;
 		 });
 	}
-
-	private static void AddSwaggerGen(this IServiceCollection services)
+	private static void AddSwaggerGen(IServiceCollection services)
 	{
 		services.AddSwaggerGen(options =>
 		{
@@ -80,7 +80,7 @@ public static class ServiceCollectionExtensions
 
 	}
 
-	private static void AddCors(this IServiceCollection services, IConfiguration configuration)
+	private static void AddCors(IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddCors(c =>
 		{
@@ -106,14 +106,14 @@ public static class ServiceCollectionExtensions
 	static void AddCompression(IServiceCollection services)
 	{
 		services.AddResponseCompression(options =>
-		{ 
-			options.EnableForHttps = true; 
-			options.Providers.Add<GzipCompressionProvider>(); 
+		{
+			options.EnableForHttps = true;
+			options.Providers.Add<GzipCompressionProvider>();
 		});
 
 		services.Configure<GzipCompressionProviderOptions>(options =>
 		{
 			options.Level = CompressionLevel.Fastest;
-		}); 
+		});
 	}
 }

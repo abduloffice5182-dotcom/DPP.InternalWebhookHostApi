@@ -8,7 +8,7 @@ public static class ApplicationServiceExtensions
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
-		services.AddValidatorsFromAssemblyContaining<GetWebhookReportValidator>();
+		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 		services.AddHttpClient();
 

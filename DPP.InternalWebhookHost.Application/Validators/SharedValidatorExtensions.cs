@@ -1,13 +1,6 @@
 ﻿namespace DPP.InternalWebhookHost.Application.Validators;
 public static class SharedValidatorExtensions
 {
-    public static void ApplyCommonFilterRules<T>(this AbstractValidator<T> v)
-        where T : IDateRange , IPagingParameter
-    {
-        v.ApplyDateRules();
-        v.ApplyPagingRules();
-    }
-
     public static void ApplyDateRules<T>(this AbstractValidator<T> v) where T : IDateRange
     {
         v.RuleFor(x => x.FromDate)
