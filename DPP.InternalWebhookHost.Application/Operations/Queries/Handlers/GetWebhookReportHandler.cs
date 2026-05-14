@@ -1,34 +1,29 @@
-﻿using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
-using DPP.InternalWebhookHost.Domain.Common.Response;
-using DPP.InternalWebhookHost.Infrastructure.Interfaces;
-using MediatR;
-namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
-public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, ApiResponse<object>>
+﻿namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
+public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IEnumerable<WebhookLogsResponse>>
 {
 
-    private readonly IWebhookRepository repository;
+	private readonly IWebhookRepository repository;
 
-    public GetWebhookReportHandler(IWebhookRepository repository)
-    {
-        this.repository = repository;
-    }
+	public GetWebhookReportHandler(IWebhookRepository repository)
+	{
+		this.repository = repository;
+	}
 
-    public async Task<ApiResponse<object>> Handle(GetWebhookReportQuery req, CancellationToken ct)
-    {
-        var endOfDay = req.ToDate?.TimeOfDay == TimeSpan.Zero
-         ? req.ToDate.Value.Date.AddDays(1).AddTicks(-1)
-         : req.ToDate;
+	public async Task<IEnumerable<WebhookLogsResponse>> Handle( GetWebhookReportQuery req, CancellationToken cancellationToken)
+	{
+		var request = await repository.GetWebhookReportAsync(
+			new WebhookLogRequest(
+				req.FromDate,
+				req.ToDate,
+				req.PageNumber,
+				req.PageSize),
+			cancellationToken);
 
-        var (total, items) = await repository.GetWebhookReportAsync(
-            req.FromDate, endOfDay, req.PageNumber, req.PageSize, ct);
-
-        return new ApiResponse<object>(true, 200, "Success", new
+        return request.Select(x => new WebhookLogsResponse
         {
-            TotalCount = total,
-            Items = items,
-            req.PageNumber,
-            req.PageSize
+            Id = x.Id,
+            DateTimeReceived = x.DateTimeReceived,
+            Payload = JsonSerializer.Deserialize<JsonElement>(x.Payload)
         });
     }
-
 }

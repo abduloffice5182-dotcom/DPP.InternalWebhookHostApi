@@ -2,27 +2,18 @@
 
 public class DbConnectionFactory : IDbConnectionFactory
 {
-	private readonly string _coreTransaction;
-	private readonly ILogger<DbConnectionFactory> _logger;
+	private readonly string _coreTransaction; 
 
-	public DbConnectionFactory(IConfiguration configuration, ILogger<DbConnectionFactory> logger)
+	public DbConnectionFactory(IConfiguration configuration)
 	{
-		_coreTransaction = configuration.GetConnectionString("CoreTransaction")!;
-		_logger = logger;
+		_coreTransaction = configuration.GetConnectionString("CoreTransaction")!; 
 	}
 
 	public async Task<IDbConnection> GetCoreTransactionConnection(CancellationToken cancellationToken)
 	{
-		try
-		{
-			var connection = new SqlConnection(_coreTransaction);
-			await connection.OpenAsync(cancellationToken);
-			return connection;
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Failed to open CoreTransaction DB connection.");
-			throw;
-		}
+		var connection = new SqlConnection(_coreTransaction);
+		await connection.OpenAsync(cancellationToken);
+
+		return connection;
 	}
 }

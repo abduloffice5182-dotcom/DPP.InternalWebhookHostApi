@@ -3,8 +3,8 @@ public static class InfrastructureServiceExtensions
 {
 	public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
 	{
-		services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-		services.AddTransient<IWebhookRepository, WebhookRepository>();
+		services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
+		services.AddScoped<IWebhookRepository, WebhookRepository>();
 
 		return services;
 	}

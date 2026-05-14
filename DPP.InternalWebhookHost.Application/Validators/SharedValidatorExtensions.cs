@@ -1,31 +1,16 @@
-﻿using FluentValidation;
-using DPP.InternalWebhookHost.Application.Common.Interfaces;
-
-namespace DPP.InternalWebhookHost.Application.Validators;
-
+﻿namespace DPP.InternalWebhookHost.Application.Validators;
 public static class SharedValidatorExtensions
 {
-    public static void ApplyCommonFilterRules<T>(this AbstractValidator<T> v)
-        where T : ICommonFilterRequest
-    {
-        v.ApplyDateRules();
-        v.ApplyPagingRules();
-    }
-
     public static void ApplyDateRules<T>(this AbstractValidator<T> v) where T : IDateRange
     {
         v.RuleFor(x => x.FromDate)
-         .NotEmpty().WithMessage("FromDate is mandatory.")
-         .NotEqual(default(DateTime));
+           .NotEmpty().WithMessage("FromDate is mandatory.");
 
         v.RuleFor(x => x.ToDate)
-           .NotEmpty().WithMessage("ToDate is mandatory.")
-           .NotEqual(default(DateTime));
-
-        v.RuleFor(x => x.ToDate)
-           .GreaterThanOrEqualTo(x => x.FromDate)
-           .When(x => x.FromDate.HasValue && x.ToDate.HasValue)
-           .WithMessage("ToDate cannot be earlier than FromDate.");
+            .NotEmpty().WithMessage("ToDate is mandatory.")
+            .GreaterThanOrEqualTo(x => x.FromDate)
+            .When(x => x.FromDate != default)
+            .WithMessage("ToDate cannot be earlier than FromDate.");
     }
 
     public static void ApplyPagingRules<T>(this AbstractValidator<T> v) where T : IPagingParameter

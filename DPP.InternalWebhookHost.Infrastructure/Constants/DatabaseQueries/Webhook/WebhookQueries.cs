@@ -2,25 +2,24 @@
 public static class WebhookQueries
 {
     public const string WebhookLogSave = @"INSERT INTO [CoreTransaction].[dbo].[WebHookPayloads]
-                                                ( [Id],[Payload],[QueryString], [Endpoint] )
+                                                ( [Id],[Payload], [EndpointId] )
                                                 OUTPUT INSERTED.Id
                                                 VALUES
-                                                ( NEWID(), @Payload, @QueryString, @Endpoint );";
+                                                (NEWID(), @Payload,@EndpointId);";
 
 
-    public const string GetWebhooklLogs = @"SELECT Id, DateTimeReceived AS ReceivedAt, Payload AS Data, QueryString, Endpoint
-                                            INTO #TempFilteredLogs
+    public const string GetWebhooklLogs = @"SELECT 
+                                                Id,
+                                                DateTimeReceived,
+                                                Payload
                                             FROM WebhookPayloads WITH (NOLOCK)
-                                            WHERE (@StartDateTime IS NULL OR DateTimeReceived >= @StartDateTime)
-                                            AND (@EndDateTime IS NULL OR DateTimeReceived <= @EndDateTime);
-
-                                            SELECT COUNT(*) FROM #TempFilteredLogs;
-
-                                            SELECT * FROM #TempFilteredLogs
-                                            ORDER BY ReceivedAt DESC
-                                            OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-                                            DROP TABLE IF EXISTS #TempFilteredLogs;";
+                                            WHERE (@StartDateTime IS NULL 
+                                                   OR DateTimeReceived >= @StartDateTime)
+                                            AND (@EndDateTime IS NULL 
+                                                 OR DateTimeReceived <= @EndDateTime)
+                                            ORDER BY DateTimeReceived DESC
+                                            OFFSET ((@PageNumber - 1) * @PageSize) ROWS
+                                            FETCH NEXT @PageSize ROWS ONLY;";
 
 }
 

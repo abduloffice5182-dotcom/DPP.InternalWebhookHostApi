@@ -1,29 +1,16 @@
-﻿
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
-using System.Reflection;
-
-namespace DPP.InternalWebhookHost.Api;
-
-/// <summary>
-/// Provides extension methods for registering application services in the service collection.
-/// </summary>
+﻿namespace DPP.InternalWebhookHost.Api;
 public static class ServiceCollectionExtensions
 {
-	/// <summary>
-	/// Registers the application's services and infrastructure components.
-	/// </summary>
-	/// <param name="services">The service collection to register services with.</param>
-	/// <param name="configuration">The application configuration instance used for service setup.</param>
 	public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
 	{
-		services.AddMvcCore();
-
-		services.AddControllers().AddJsonOptions(x =>
-		x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
-		);
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 		services.AddEndpointsApiExplorer();
+		services.AddControllers()
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.DefaultIgnoreCondition =
+			System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+	});
 
 		AddSwaggerGen(services);
 		AddApiVersioning(services);
@@ -38,7 +25,7 @@ public static class ServiceCollectionExtensions
 		services.AddHealthChecks();
 	}
 
-	private static void ConfigureApplicationCookie(this IServiceCollection services)
+	private static void ConfigureApplicationCookie(IServiceCollection services)
 	{
 		services.ConfigureApplicationCookie(options =>
 		{
@@ -63,8 +50,7 @@ public static class ServiceCollectionExtensions
 			 options.SubstituteApiVersionInUrl = true;
 		 });
 	}
-
-	private static void AddSwaggerGen(this IServiceCollection services)
+	private static void AddSwaggerGen(IServiceCollection services)
 	{
 		services.AddSwaggerGen(options =>
 		{
@@ -94,7 +80,7 @@ public static class ServiceCollectionExtensions
 
 	}
 
-	private static void AddCors(this IServiceCollection services, IConfiguration configuration)
+	private static void AddCors(IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddCors(c =>
 		{
@@ -121,22 +107,13 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddResponseCompression(options =>
 		{
-			// Works for HTTPS also
 			options.EnableForHttps = true;
-
-			// Add compression providers
 			options.Providers.Add<GzipCompressionProvider>();
-			//options.Providers.Add<BrotliCompressionProvider>();
 		});
 
 		services.Configure<GzipCompressionProviderOptions>(options =>
 		{
 			options.Level = CompressionLevel.Fastest;
 		});
-
-		//builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
-		//{
-		//	options.Level = CompressionLevel.Fastest;
-		//}); 
 	}
 }

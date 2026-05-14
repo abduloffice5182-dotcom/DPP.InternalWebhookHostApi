@@ -1,10 +1,4 @@
-﻿using DPP.InternalWebhookHost.Application.Behaviors;
-using DPP.InternalWebhookHost.Application.Validators;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection; 
-using System.Reflection; 
-
-namespace DPP.InternalWebhookHost.Application.Extensions;
+﻿namespace DPP.InternalWebhookHost.Application.Extensions;
 
 public static class ApplicationServiceExtensions
 {
@@ -14,7 +8,7 @@ public static class ApplicationServiceExtensions
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
-		services.AddValidatorsFromAssemblyContaining<GetWebhookReportValidator>();
+		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 		services.AddHttpClient();
 
