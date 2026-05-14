@@ -9,9 +9,7 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 		this.repository = repository;
 	}
 
-	public async Task<IEnumerable<WebhookLogsResponse>> Handle(
-	GetWebhookReportQuery req,
-	CancellationToken cancellationToken)
+	public async Task<IEnumerable<WebhookLogsResponse>> Handle( GetWebhookReportQuery req, CancellationToken cancellationToken)
 	{
 		var request = await repository.GetWebhookReportAsync(
 			new WebhookLogRequest(
@@ -21,18 +19,11 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 				req.PageSize),
 			cancellationToken);
 
-		var response = request.Select(x =>
-		{
-			using var doc = JsonDocument.Parse(x.Payload);
-
-			return new WebhookLogsResponse
-			{
-				Id = x.Id,
-				DateTimeReceived = x.DateTimeReceived,  
-				Payload = doc.RootElement.Clone()
-			};
-		});
-
-		return response;
-	}
+        return request.Select(x => new WebhookLogsResponse
+        {
+            Id = x.Id,
+            DateTimeReceived = x.DateTimeReceived,
+            Payload = JsonSerializer.Deserialize<JsonElement>(x.Payload)
+        });
+    }
 }
