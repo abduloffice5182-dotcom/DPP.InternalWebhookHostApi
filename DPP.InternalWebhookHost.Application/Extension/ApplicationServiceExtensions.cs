@@ -1,10 +1,4 @@
-﻿using DPP.InternalWebhookHost.Application.Behaviors;
-using DPP.InternalWebhookHost.Application.Validators;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection; 
-using System.Reflection; 
-
-namespace DPP.InternalWebhookHost.Application.Extensions;
+﻿namespace DPP.InternalWebhookHost.Application.Extensions;
 
 public static class ApplicationServiceExtensions
 {

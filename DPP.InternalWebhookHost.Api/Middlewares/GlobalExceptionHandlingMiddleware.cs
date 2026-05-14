@@ -1,10 +1,4 @@
-﻿using DPP.InternalWebhookHost.Domain.Common.Response; // For ApiResponse<T>
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System.Net;
-using FluentValidation;
-
-namespace DPP.InternalWebhookHost.Api.Middlewares;
+﻿namespace DPP.InternalWebhookHost.Api.Middlewares;
 
 public class GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
 {

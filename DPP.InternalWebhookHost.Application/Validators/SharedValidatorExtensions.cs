@@ -1,12 +1,8 @@
-﻿using FluentValidation;
-using DPP.InternalWebhookHost.Application.Common.Interfaces;
-
-namespace DPP.InternalWebhookHost.Application.Validators;
-
+﻿namespace DPP.InternalWebhookHost.Application.Validators;
 public static class SharedValidatorExtensions
 {
     public static void ApplyCommonFilterRules<T>(this AbstractValidator<T> v)
-        where T : ICommonFilterRequest
+        where T : IDateRange , IPagingParameter
     {
         v.ApplyDateRules();
         v.ApplyPagingRules();

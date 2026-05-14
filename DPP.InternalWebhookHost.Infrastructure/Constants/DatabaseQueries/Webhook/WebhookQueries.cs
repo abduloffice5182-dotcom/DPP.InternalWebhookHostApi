@@ -2,15 +2,15 @@
 public static class WebhookQueries
 {
     public const string WebhookLogSave = @"INSERT INTO [CoreTransaction].[dbo].[WebHookPayloads]
-                                                ( [Id],[Payload], [Endpoint] )
+                                                ( [Id],[Payload], [EndpointId] )
                                                 OUTPUT INSERTED.Id
                                                 VALUES
-                                                (NEWID(), @Payload,@Endpoint);";
+                                                (NEWID(), @Payload,@EndpointId);";
 
 
     public const string GetWebhooklLogs = @"SELECT 
                                                 Id,
-                                                DateTimeReceived AS ReceivedAt,
+                                                DateTimeReceived,
                                                 Payload
                                             FROM WebhookPayloads WITH (NOLOCK)
                                             WHERE (@StartDateTime IS NULL 

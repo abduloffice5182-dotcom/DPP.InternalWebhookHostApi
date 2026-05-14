@@ -1,9 +1,4 @@
-﻿using DPP.InternalWebhookHost.Api.Modal;
-using DPP.InternalWebhookHost.Domain.Common.Response.Webhook;
-using Newtonsoft.Json;
-using System.Threading;
-
-namespace DPP.InternalWebhookHost.Api.Controllers;
+﻿namespace DPP.InternalWebhookHost.Api.Controllers;
 
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]

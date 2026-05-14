@@ -1,10 +1,4 @@
-﻿using DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
-using DPP.InternalWebhookHost.Domain.Common.Response;
-using DPP.InternalWebhookHost.Domain.Common.Response.Webhook;
-using DPP.InternalWebhookHost.Domain.Entities.Request.Webhook;
-using DPP.InternalWebhookHost.Infrastructure.Interfaces;
-using MediatR;
-namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
+﻿namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
 public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IEnumerable<WebhookLogsResponse>>
 {
 
@@ -15,9 +9,30 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 		this.repository = repository;
 	}
 
-	public async Task<IEnumerable<WebhookLogsResponse>> Handle(GetWebhookReportQuery req, CancellationToken cancellationToken)
-	{ 
-		return await repository.GetWebhookReportAsync(new WebhookLogRequest(req.FromDate, req.ToDate, req.PageNumber, req.PageSize), cancellationToken); 
-	}
+	public async Task<IEnumerable<WebhookLogsResponse>> Handle(
+	GetWebhookReportQuery req,
+	CancellationToken cancellationToken)
+	{
+		var request = await repository.GetWebhookReportAsync(
+			new WebhookLogRequest(
+				req.FromDate,
+				req.ToDate,
+				req.PageNumber,
+				req.PageSize),
+			cancellationToken);
 
+		var response = request.Select(x =>
+		{
+			using var doc = JsonDocument.Parse(x.Payload);
+
+			return new WebhookLogsResponse
+			{
+				Id = x.Id,
+				DateTimeReceived = x.DateTimeReceived,  
+				Payload = doc.RootElement.Clone()
+			};
+		});
+
+		return response;
+	}
 }

@@ -1,20 +1,6 @@
-﻿
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
-using System.Reflection;
-
-namespace DPP.InternalWebhookHost.Api;
-
-/// <summary>
-/// Provides extension methods for registering application services in the service collection.
-/// </summary>
+﻿namespace DPP.InternalWebhookHost.Api;
 public static class ServiceCollectionExtensions
 {
-	/// <summary>
-	/// Registers the application's services and infrastructure components.
-	/// </summary>
-	/// <param name="services">The service collection to register services with.</param>
-	/// <param name="configuration">The application configuration instance used for service setup.</param>
 	public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddMvcCore();
@@ -120,23 +106,14 @@ public static class ServiceCollectionExtensions
 	static void AddCompression(IServiceCollection services)
 	{
 		services.AddResponseCompression(options =>
-		{
-			// Works for HTTPS also
-			options.EnableForHttps = true;
-
-			// Add compression providers
-			options.Providers.Add<GzipCompressionProvider>();
-			//options.Providers.Add<BrotliCompressionProvider>();
+		{ 
+			options.EnableForHttps = true; 
+			options.Providers.Add<GzipCompressionProvider>(); 
 		});
 
 		services.Configure<GzipCompressionProviderOptions>(options =>
 		{
 			options.Level = CompressionLevel.Fastest;
-		});
-
-		//builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
-		//{
-		//	options.Level = CompressionLevel.Fastest;
-		//}); 
+		}); 
 	}
 }
