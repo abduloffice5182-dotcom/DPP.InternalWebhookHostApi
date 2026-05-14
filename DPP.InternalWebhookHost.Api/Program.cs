@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseResponseCompression();
+app.UseResponseCompression();
 app.UseAuthorization();
 
 app.MapHealthChecks("/health");

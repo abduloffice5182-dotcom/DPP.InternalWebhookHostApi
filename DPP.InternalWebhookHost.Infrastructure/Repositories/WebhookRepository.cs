@@ -8,7 +8,7 @@ public class WebhookRepository : IWebhookRepository
 		this.dbConnection = dbConnection;
 		this.configuration = configuration;
 	}
-	public async Task<Guid> WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest,
+	public async Task WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest,
 		CancellationToken cancellationToken)
 	{
 		using var conn = await dbConnection.GetCoreTransactionConnection(cancellationToken);
@@ -16,8 +16,8 @@ public class WebhookRepository : IWebhookRepository
 		parameters.Add("@Payload", webhookLogRequest.Payload);
 		parameters.Add("@EndpointId", webhookLogRequest.EndpointId);
 
-		return await conn.ExecuteScalarAsync<Guid>(WebhookQueries.WebhookLogSave,
-		parameters, commandType: CommandType.Text, commandTimeout: configuration.GetValue<int?>(ApiConfigurationConstant.SqlConnectionTimeout) ?? 30);
+		await conn.ExecuteAsync(WebhookQueries.WebhookLogSave,
+	   parameters, commandType: CommandType.Text, commandTimeout: configuration.GetValue<int?>(ApiConfigurationConstant.SqlConnectionTimeout) ?? 30);
 	}
 
 	public async Task<IEnumerable<WebhookLogs>> GetWebhookReportAsync(WebhookLogRequest webhookLogRequest, CancellationToken cancellationToken)

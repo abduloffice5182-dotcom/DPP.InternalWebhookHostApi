@@ -1,5 +1,5 @@
 ﻿namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers;
-public class SaveWebhookCommandHandler : IRequestHandler<SaveWebhookCommand, Guid>
+public class SaveWebhookCommandHandler : IRequestHandler<SaveWebhookCommand>
 {
 	private readonly IWebhookRepository webhookRepository;
 
@@ -8,8 +8,8 @@ public class SaveWebhookCommandHandler : IRequestHandler<SaveWebhookCommand, Gui
 		this.webhookRepository = webhookRepository;
 	}
 
-	public async Task<Guid> Handle(SaveWebhookCommand request, CancellationToken cancellationToken)
+	public async Task Handle(SaveWebhookCommand request, CancellationToken cancellationToken)
 	{ 
-		return await webhookRepository.WebhooklLogSave(new SaveWebhookPayloadsRequest(request.Payload , request.EndpointId), cancellationToken);
+		 await webhookRepository.WebhooklLogSave(new SaveWebhookPayloadsRequest(request.Payload , request.EndpointId), cancellationToken);
 	}
 }

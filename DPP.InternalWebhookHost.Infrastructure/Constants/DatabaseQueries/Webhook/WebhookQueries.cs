@@ -2,22 +2,18 @@
 public static class WebhookQueries
 {
     public const string WebhookLogSave = @"INSERT INTO [CoreTransaction].[dbo].[WebHookPayloads]
-                                                ( [Id],[Payload], [EndpointId] )
-                                                OUTPUT INSERTED.Id
+                                                ([Payload], [EndpointId] ) 
                                                 VALUES
-                                                (NEWID(), @Payload,@EndpointId);";
+                                                (@Payload,@EndpointId);";
 
 
-    public const string GetWebhooklLogs = @"SELECT 
-                                                Id,
+    public const string GetWebhooklLogs = @"SELECT  
                                                 DateTimeReceived,
                                                 Payload
                                             FROM WebhookPayloads WITH (NOLOCK)
-                                            WHERE (@StartDateTime IS NULL 
-                                                   OR DateTimeReceived >= @StartDateTime)
-                                            AND (@EndDateTime IS NULL 
-                                                 OR DateTimeReceived <= @EndDateTime)
-                                            ORDER BY DateTimeReceived DESC
+                                            WHERE DateTimeReceived >= @StartDateTime
+                                            AND DateTimeReceived <= @EndDateTime
+                                            ORDER BY Id DESC
                                             OFFSET ((@PageNumber - 1) * @PageSize) ROWS
                                             FETCH NEXT @PageSize ROWS ONLY;";
 

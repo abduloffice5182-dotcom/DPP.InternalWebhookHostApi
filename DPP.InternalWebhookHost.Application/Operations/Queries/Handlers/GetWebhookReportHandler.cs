@@ -20,8 +20,7 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 			cancellationToken);
 
         return request.Select(x => new WebhookLogsResponse
-        {
-            Id = x.Id,
+        { 
             DateTimeReceived = x.DateTimeReceived,
             Payload = JsonSerializer.Deserialize<JsonElement>(x.Payload)
         });
