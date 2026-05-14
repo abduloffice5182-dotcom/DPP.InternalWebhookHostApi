@@ -1,7 +1,10 @@
-﻿namespace DPP.InternalWebhookHost.Infrastructure.Interfaces;
+﻿using DPP.InternalWebhookHost.Domain.Common.Response.Webhook;
+using DPP.InternalWebhookHost.Domain.Entities.Request.Webhook;
+
+namespace DPP.InternalWebhookHost.Infrastructure.Interfaces;
 public interface IWebhookRepository
 {
 	Task<Guid> WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest, CancellationToken cancellationToken);
-    Task<(int TotalCount, IEnumerable<dynamic> Items)> GetWebhookReportAsync(DateTime? start, DateTime? end, int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<IEnumerable<WebhookLogsResponse>> GetWebhookReportAsync(WebhookLogRequest webhookLogRequest, CancellationToken cancellationToken);
 
 }

@@ -27,7 +27,7 @@ public class GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<Glo
         if (context.Response.StatusCode == StatusCodes.Status401Unauthorized ||
             context.Response.StatusCode == StatusCodes.Status403Forbidden)
         {
-            if (!context.Response.HasStarted)
+			if (!context.Response.HasStarted)
             {
                 var message = context.Response.StatusCode == 401 ? "Unauthorized Access" : "Forbidden Access";
                 await WriteErrorResponseAsync(context, context.Response.StatusCode, message);
@@ -55,9 +55,7 @@ public class GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<Glo
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
 
-        var response = new ApiResponse<object>(
-            Success: false,
-            StatusCode: statusCode,
+        var response = new ApiResponse<object>( 
             Message: message,
             Data: null
         );

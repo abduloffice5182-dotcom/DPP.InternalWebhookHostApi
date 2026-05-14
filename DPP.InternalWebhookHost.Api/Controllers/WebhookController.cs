@@ -1,4 +1,5 @@
 ﻿using DPP.InternalWebhookHost.Api.Modal;
+using DPP.InternalWebhookHost.Domain.Common.Response.Webhook;
 using Newtonsoft.Json;
 using System.Threading;
 
@@ -23,7 +24,8 @@ public class WebhookController : ControllerBase
 	public async Task<IActionResult> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
 	{
 		var response = await mediator.Send(request, cancellationToken);
-		return Ok(response);
+
+		return Ok(new ApiResponse<IEnumerable<WebhookLogsResponse>>(null , response));
 	}
 	#endregion
 
@@ -32,102 +34,33 @@ public class WebhookController : ControllerBase
 	[Route("{endpointId}")]
 	public async Task<IActionResult> Post(string endpointId, CancellationToken cancellationToken)
 	{
-		string requestBody = string.Empty;
-		if (Request.HasFormContentType)
+		if (!Request.HasJsonContentType())
 		{
-			requestBody = await HandleMultiPartFormData(cancellationToken);
+			return BadRequest(new ApiResponse<object>(
+				Message: "Only application/json content type is supported.",
+				Data: null));
 		}
-		else
+
+		string requestBody = string.Empty;
+		Request.EnableBuffering();
+		using (var reader = new StreamReader(Request.Body
+			, Encoding.UTF8
+			, detectEncodingFromByteOrderMarks: false
+			, leaveOpen: true))
 		{
-			Request.EnableBuffering();
-			using (var reader = new StreamReader(Request.Body
-				, Encoding.UTF8
-				, detectEncodingFromByteOrderMarks: false
-				, leaveOpen: true))
-			{
-				requestBody = await reader.ReadToEndAsync();
-				Request.Body.Position = 0;
-			}
+			requestBody = await reader.ReadToEndAsync();
+			Request.Body.Position = 0;
 		}
 
 		logger.LogInformation("Webhook Payload : {0}", requestBody);
 
-		var response = await mediator.Send(new SaveWebhookCommand
+		await mediator.Send(new SaveWebhookCommand
 		{
-			Payload = requestBody,
-			QueryString = Request.QueryString.Value,
-			Endpoint = $"{Request.Path.Value}"
+			Payload = requestBody, 
+			EndpointId = endpointId
 		}, cancellationToken);
 
-		return Ok(new ApiResponse<object>(true, (int)HttpStatusCode.OK, "Payload Recieved Successfully", $"Webhook Refernce Id : {response.ToString()}"));
-	} 
-	#endregion
-
-	async Task<string> HandleMultiPartFormData(CancellationToken cancellationToken)
-	{
-		string requestBody = string.Empty;
-		List<FileModel> savedFiles = new();
-		var form = await Request.ReadFormAsync(cancellationToken);
-
-
-		foreach (var file in form.Files)
-		{
-			if (file.Length > 0)
-			{
-				var uploadsFolder = Path.Combine(
-					Directory.GetCurrentDirectory(),
-					"Uploads");
-
-				if (!Directory.Exists(uploadsFolder))
-				{
-					Directory.CreateDirectory(uploadsFolder);
-				}
-
-				var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-
-				var filePath = Path.Combine(
-					uploadsFolder,
-					fileName);
-
-				// S3 or Microsoft Blob Storage
-				using (var stream = new FileStream(
-					filePath,
-					FileMode.Create))
-				{
-					await file.CopyToAsync(
-						stream,
-						cancellationToken);
-				}
-
-				savedFiles.Add(new FileModel()
-				{
-					FileName = fileName,
-					FileExtension = Path.GetExtension(file.FileName),
-					FilePath = filePath
-				});
-			}
-		}
-
-		// Form fields
-		var formFields = form.ToDictionary(
-			x => x.Key,
-			x => x.Value.ToString());
-
-		// Final request object
-		var requestObject = new
-		{
-			FormFields = formFields,
-			Files = savedFiles,
-			contentType = Request.ContentType,
-			contentLength = Request.ContentLength,
-		};
-
-		// Convert to JSON
-		requestBody =
-			JsonConvert.SerializeObject(requestObject);
-
-		return requestBody;
-
-
+		return Ok(new ApiResponse<object>("Payload Recieved Successfully", null));
 	}
+	#endregion
 }

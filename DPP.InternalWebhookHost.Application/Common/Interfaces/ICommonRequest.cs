@@ -1,8 +1,8 @@
 ﻿namespace DPP.InternalWebhookHost.Application.Common.Interfaces;
 public interface IDateRange
 {
-    DateTime? FromDate { get; set; }
-    DateTime? ToDate { get; set; }
+    DateTime FromDate { get; set; }
+    DateTime ToDate { get; set; }
 }
 
 public interface IPagingParameter

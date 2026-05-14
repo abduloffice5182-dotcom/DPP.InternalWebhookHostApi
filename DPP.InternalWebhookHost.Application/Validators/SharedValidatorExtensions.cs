@@ -23,8 +23,7 @@ public static class SharedValidatorExtensions
            .NotEqual(default(DateTime));
 
         v.RuleFor(x => x.ToDate)
-           .GreaterThanOrEqualTo(x => x.FromDate)
-           .When(x => x.FromDate.HasValue && x.ToDate.HasValue)
+           .GreaterThanOrEqualTo(x => x.FromDate) 
            .WithMessage("ToDate cannot be earlier than FromDate.");
     }
 

@@ -3,7 +3,12 @@ using DPP.InternalWebhookHost.Infrastructure.Constants.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.DefaultIgnoreCondition =
+			System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+	});
 builder.Services.AddApiVersioning(options =>
 {
 	options.DefaultApiVersion = new ApiVersion(1, 0);
