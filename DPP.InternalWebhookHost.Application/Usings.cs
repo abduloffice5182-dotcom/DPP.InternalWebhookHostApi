@@ -13,5 +13,5 @@ global using DPP.InternalWebhookHost.Domain.Entities.Request.Webhook;
 global using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 global using DPP.InternalWebhookHost.Application.Operations.Commands.Requests;
 global using DPP.InternalWebhookHost.Application.Behaviors;
-global using DPP.InternalWebhookHost.Application.Validators; 
-
+global using DPP.InternalWebhookHost.Application.Validators;
+global using DPP.InternalWebhookHost.Domain.Entities.Response.Webhook;

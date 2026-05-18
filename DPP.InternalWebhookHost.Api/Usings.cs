@@ -24,3 +24,6 @@ global using DPP.InternalWebhookHost.Application.Operations.Queries.Response.Web
 global using DPP.InternalWebhookHost.Application.Extensions;
 global using DPP.InternalWebhookHost.Infrastructure.Extensions;
 global using DPP.InternalWebhookHost.Infrastructure.Constants.Configuration;
+global using DPP.InternalWebhookHost.Domain.Entities.Response.Webhook;
+global using Dapper;
+global using DPP.InternalWebhookHost.Infrastructure.Handler;

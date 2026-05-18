@@ -1,5 +1,5 @@
 ﻿namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
-public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IEnumerable<WebhookLogsResponse>>
+public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IEnumerable<WebhookLogs>>
 {
 
 	private readonly IWebhookRepository repository;
@@ -9,9 +9,9 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 		this.repository = repository;
 	}
 
-	public async Task<IEnumerable<WebhookLogsResponse>> Handle( GetWebhookReportQuery req, CancellationToken cancellationToken)
+	public async Task<IEnumerable<WebhookLogs>> Handle( GetWebhookReportQuery req, CancellationToken cancellationToken)
 	{
-		var request = await repository.GetWebhookReportAsync(
+		return await repository.GetWebhookReportAsync(
 			new WebhookLogRequest(
 				req.FromDate,
 				req.ToDate,
@@ -19,10 +19,6 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 				req.PageSize),
 			cancellationToken);
 
-        return request.Select(x => new WebhookLogsResponse
-        { 
-            DateTimeReceived = x.DateTimeReceived,
-            Payload = JsonSerializer.Deserialize<JsonElement>(x.Payload)
-        });
+       
     }
 }

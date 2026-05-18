@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
+SqlMapper.AddTypeHandler(new JsonElementTypeHandler());
 Log.Logger = new LoggerConfiguration()
 	.ReadFrom.Configuration(configuration)
 	.CreateLogger();
