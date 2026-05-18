@@ -13,23 +13,18 @@ public class WebhookController : BaseController
 	#region GET
 	[HttpGet]
 	[Route("report")]
-	public async Task<IActionResult> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
+	public async Task<IEnumerable<WebhookLogsResponse>> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
 	{
-		var response = await mediator.Send(request, cancellationToken);
-
-		return Success<IEnumerable<WebhookLogsResponse>>(response); 
+		return await mediator.Send(request, cancellationToken); 
 	}
 	#endregion
 
 	#region POST
 	[HttpPost]
 	[Route("{endpointId}")]
+	[Consumes("application/json", "application/*+json")]
 	public async Task<IActionResult> Post(string endpointId, CancellationToken cancellationToken)
 	{ 
-		if (!Request.HasJsonContentType())
-		{
-			return Failure("Only application/json content type is supported."); 
-		}
 		string requestBody = string.Empty;
 		Request.EnableBuffering();
 		using (var reader = new StreamReader(Request.Body
@@ -46,7 +41,7 @@ public class WebhookController : BaseController
 			EndpointId = endpointId
 		}, cancellationToken);
 
-		return Success("Payload Recieved Successfully"); 
+		return Ok();
 	}
 	#endregion
 }
