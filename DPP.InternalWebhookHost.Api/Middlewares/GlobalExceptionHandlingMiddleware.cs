@@ -1,7 +1,21 @@
-﻿namespace DPP.InternalWebhookHost.Api.Middlewares;
+﻿using Microsoft.Extensions.Options;
+using System.Text.Json;
 
-public class GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
+namespace DPP.InternalWebhookHost.Api.Middlewares;
+
+public class GlobalExceptionHandlingMiddleware
 {
+	private readonly RequestDelegate next;
+	private readonly ILogger<GlobalExceptionHandlingMiddleware> logger;
+	private readonly JsonSerializerOptions jsonOptions;
+
+	public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger, IOptions<JsonOptions> jsonOptions)
+	{
+		this.jsonOptions = jsonOptions.Value.JsonSerializerOptions;
+		this.next = next;
+		this.logger = logger;
+	}
+
 	public async Task Invoke(HttpContext context)
 	{
 		try
@@ -80,12 +94,12 @@ QueryString : {QueryString},UserAgent : {UserAgent} ,Headers :{Headers},Payload 
 			message);
 	}
 
-	private static Task WriteErrorResponseAsync(HttpContext context, int statusCode, string errorMessage)
+	private Task WriteErrorResponseAsync(HttpContext context, int statusCode, string errorMessage)
 	{
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = statusCode; 
 		var response = new ApiResponse<object>(null, null, errorMessage);
 
-		return context.Response.WriteAsJsonAsync(response);
+		return context.Response.WriteAsJsonAsync(response, options: jsonOptions);
 	}
 }
