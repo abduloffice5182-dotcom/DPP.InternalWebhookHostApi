@@ -13,6 +13,7 @@ public class WebhookRepository : BaseRepository, IWebhookRepository
 
 	public async Task<IEnumerable<WebhookLogs>> GetWebhookReportAsync(WebhookLogRequest webhookLogRequest, CancellationToken cancellationToken)
 	{  
-		return await QueryAsync<WebhookLogs>(WebhookQueries.GetWebhooklLogs, webhookLogRequest,cancellationToken:cancellationToken);
+		return await QueryAsync<WebhookLogs>(
+			WebhookQueries.GetWebhooklLogs, webhookLogRequest,cancellationToken:cancellationToken);
 	}
 }

@@ -25,3 +25,6 @@ TestResults/
 # OS files
 Thumbs.db
 .DS_Store
+/DPP.InternalWebhookHost.Api/.config
+/DPP.InternalWebhookHost.Api/Properties/PublishProfiles
+/DPP.InternalWebhookHost.Api/bin.zip

@@ -5,5 +5,6 @@ public static class ApiConfigurationConstant
 {
 	public const string MaximumRequestSizeMB = "ApiConfiguration:MaximumRequestSizeMB";
 	public const string SqlConnectionTimeout = "ApiConfiguration:SqlConnectionTimeout";
+    public const string SwaggerEnable = "ApiConfiguration:SwaggerEnable";
 
 }

@@ -27,7 +27,7 @@ var app = builder.Build();
 app.UseSerilogRequestLogging();
 
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
-if (app.Environment.IsDevelopment())
+if (configuration.GetValue<bool?>(ApiConfigurationConstant.SwaggerEnable) ?? false)
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
