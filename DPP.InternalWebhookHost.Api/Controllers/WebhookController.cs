@@ -23,25 +23,21 @@ public class WebhookController : BaseController
 	[HttpPost]
 	[Route("{endpointId}")]
 	[Consumes("application/json", "application/*+json")]
-	public async Task<IActionResult> Post(string endpointId, CancellationToken cancellationToken)
+	public async Task Post(string endpointId, CancellationToken cancellationToken)
 	{ 
-		string requestBody = string.Empty;
 		Request.EnableBuffering();
 		using (var reader = new StreamReader(Request.Body
 			, Encoding.UTF8
-			, detectEncodingFromByteOrderMarks: false
+			,  false 
 			, leaveOpen: true))
-		{
-			requestBody = await reader.ReadToEndAsync();
-			Request.Body.Position = 0;
-		}  
-		await mediator.Send(new SaveWebhookCommand
-		{
-			Payload = requestBody, 
-			EndpointId = endpointId
-		}, cancellationToken);
-
-		return Ok();
+		{ 
+            await mediator.Send(new SaveWebhookCommand
+            {
+                Payload =  await reader.ReadToEndAsync(),
+                EndpointId = endpointId
+            }, cancellationToken); 
+            Request.Body.Position = 0;
+        }   
 	}
 	#endregion
 }
