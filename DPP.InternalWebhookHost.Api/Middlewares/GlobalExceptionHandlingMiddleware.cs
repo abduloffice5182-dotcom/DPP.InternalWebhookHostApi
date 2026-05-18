@@ -61,8 +61,13 @@ public class GlobalExceptionHandlingMiddleware
 					string.Join(" | ",
 						valEx.Errors.Select(e => e.ErrorMessage))
 				),
+            JsonException jex =>
+            (
+                StatusCodes.Status400BadRequest,
+                "Invalid Json"
+            ),
 
-			ArgumentException or
+            ArgumentException or
 			InvalidOperationException or
 			BadHttpRequestException =>
 				(
