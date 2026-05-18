@@ -17,6 +17,6 @@ public static class SharedValidatorExtensions
     public static void ApplyPagingRules<T>(this AbstractValidator<T> v) where T : IPagingParameter
     {
         v.RuleFor(x => x.PageNumber).GreaterThan(0).WithMessage("Page Number Should be proper .");
-        v.RuleFor(x => x.PageSize).InclusiveBetween(1, 100).WithMessage("Page Size Should be proper .");
+        v.RuleFor(x => x.PageSize).GreaterThan(0).WithMessage("Page Size Should be proper .");
     }
 }
