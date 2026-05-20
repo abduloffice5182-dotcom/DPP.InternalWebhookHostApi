@@ -18,6 +18,14 @@ public static class WebhookQueries
                                             OFFSET ((@PageNumber - 1) * @PageSize) ROWS
                                             FETCH NEXT @PageSize ROWS ONLY;";
 
+	public const string GetWebhookDetails = @"SELECT TOP(1)  
+                                                Id,
+                                                EndpointId,
+                                                Payload,
+                                                DateTimeReceived 
+                                            FROM WebhookPayloads WITH (NOLOCK)
+                                            WHERE Id >= @Id";
+
 }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPP.InternalWebhookHost.Application.Operations.Queries.Requests
 {
-	public class GetWebhookDetailsQuery : IRequest<WebhookLogs>
+	public class GetWebhookDetailsQuery : IRequest<WebhookDetails?>
 	{
 		public int Id { get; set; }
 	}

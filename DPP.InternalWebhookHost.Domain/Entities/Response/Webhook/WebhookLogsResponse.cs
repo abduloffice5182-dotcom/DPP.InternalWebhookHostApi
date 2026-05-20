@@ -9,3 +9,10 @@ public class WebhookLogs
 	//public JsonElement Payload { get; set; }
 	public string EndpointId { get; set; }
 }
+public class WebhookDetails
+{
+	public int Id { get; set; }
+	public DateTime DateTimeReceived { get; set; }
+	public JsonElement Payload { get; set; }
+	public string EndpointId { get; set; }
+}

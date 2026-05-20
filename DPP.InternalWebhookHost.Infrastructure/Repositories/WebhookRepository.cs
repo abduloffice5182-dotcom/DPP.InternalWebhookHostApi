@@ -18,8 +18,8 @@ public class WebhookRepository : BaseRepository, IWebhookRepository
 		return await QueryAsync<WebhookLogs>(WebhookQueries.GetWebhooklLogs, webhookLogRequest, cancellationToken: cancellationToken);
 	}
 
-	public async Task<WebhookLogs?> GetWebhookDetailsAsync(WebhookDetailsRequest webhookDetailsRequest, CancellationToken cancellationToken)
+	public async Task<WebhookDetails?> GetWebhookDetailsAsync(WebhookDetailsRequest webhookDetailsRequest, CancellationToken cancellationToken)
 	{
-		return await QueryFirstOrDefaultAsync<WebhookLogs>(WebhookQueries.GetWebhooklLogs, webhookDetailsRequest, cancellationToken: cancellationToken);
+		return await QueryFirstOrDefaultAsync<WebhookDetails>(WebhookQueries.GetWebhookDetails, webhookDetailsRequest, cancellationToken: cancellationToken);
 	}
 }
