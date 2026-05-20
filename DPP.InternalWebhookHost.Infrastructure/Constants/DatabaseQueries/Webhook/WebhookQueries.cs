@@ -8,8 +8,9 @@ public static class WebhookQueries
 
 
     public const string GetWebhooklLogs = @"SELECT  
-                                                DateTimeReceived,
-                                                Payload
+                                                Id,
+                                                EndpointId,
+                                                DateTimeReceived 
                                             FROM WebhookPayloads WITH (NOLOCK)
                                             WHERE DateTimeReceived >= @StartDateTime
                                             AND DateTimeReceived <= @EndDateTime

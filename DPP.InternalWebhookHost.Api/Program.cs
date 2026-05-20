@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowCORS");
 app.UseResponseCompression();
 app.UseAuthorization();
 

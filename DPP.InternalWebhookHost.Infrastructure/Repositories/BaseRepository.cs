@@ -25,5 +25,13 @@ public class BaseRepository
 		return await conn.QueryAsync<T>(sql,
 		  param, commandType: commandType ?? CommandType.Text, commandTimeout: sqlConnectionTimeout);
 	}
+	protected async Task<T?> QueryFirstOrDefaultAsync<T>(string sql, object? param = null, CommandType? commandType = null, CancellationToken cancellationToken = default)
+	{
+		using var conn = await dbConnection.GetCoreTransactionConnection(cancellationToken);
+
+		return await conn.QuerySingleOrDefaultAsync<T>(sql,
+		  param, commandType: commandType ?? CommandType.Text, commandTimeout: sqlConnectionTimeout);
+
+	}
 }
 
