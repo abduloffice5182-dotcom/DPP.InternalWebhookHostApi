@@ -34,7 +34,7 @@ if (configuration.GetValue<bool?>(ApiConfigurationConstant.SwaggerEnable) ?? fal
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowCORS");
 app.UseResponseCompression();
 app.UseAuthorization();
 
