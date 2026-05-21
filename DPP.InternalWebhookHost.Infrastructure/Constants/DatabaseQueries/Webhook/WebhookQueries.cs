@@ -7,16 +7,22 @@ public static class WebhookQueries
                                                 (@Payload,@EndpointId);";
 
 
-    public const string GetWebhooklLogs = @"SELECT  
-                                                Id,
-                                                EndpointId,
-                                                DateTimeReceived 
-                                            FROM WebhookPayloads WITH (NOLOCK)
-                                            WHERE DateTimeReceived >= @StartDateTime
-                                            AND DateTimeReceived <= @EndDateTime
-                                            ORDER BY Id DESC
-                                            OFFSET ((@PageNumber - 1) * @PageSize) ROWS
-                                            FETCH NEXT @PageSize ROWS ONLY;";
+    public const string GetWebhooklLogs = @"SELECT
+    Id,
+    EndpointId,
+    DateTimeReceived
+FROM WebhookPayloads WITH (NOLOCK)
+WHERE
+    (@StartDateTime IS NULL
+        OR DateTimeReceived >= @StartDateTime)
+AND (@EndDateTime IS NULL
+        OR DateTimeReceived < DATEADD(DAY, 1, @EndDateTime))
+AND (@Endpoint IS NULL
+        OR EndpointId LIKE @Endpoint + '%')
+ORDER BY DateTimeReceived DESC
+OFFSET (@PageNumber - 1) * @PageSize ROWS
+FETCH NEXT @PageSize ROWS ONLY;
+";
 
 	public const string GetWebhookDetails = @"SELECT TOP(1)  
                                                 Id,

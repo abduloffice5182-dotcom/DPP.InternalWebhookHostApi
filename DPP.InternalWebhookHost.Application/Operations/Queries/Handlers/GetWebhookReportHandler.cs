@@ -16,7 +16,8 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 				req.FromDate,
 				req.ToDate,
 				req.PageNumber,
-				req.PageSize),
+				req.PageSize,
+				req.EndpointId),
 			cancellationToken);
 
        

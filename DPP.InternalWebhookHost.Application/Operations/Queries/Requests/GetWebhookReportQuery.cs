@@ -6,4 +6,5 @@ public class GetWebhookReportQuery :  IRequest<IEnumerable<WebhookLogs>>, IDateR
 	public DateTime ToDate { get; set; }
 	public int PageNumber { get ; set; }
 	public int PageSize { get; set; }
+	public string? EndpointId { get; set; } =null;
 }
