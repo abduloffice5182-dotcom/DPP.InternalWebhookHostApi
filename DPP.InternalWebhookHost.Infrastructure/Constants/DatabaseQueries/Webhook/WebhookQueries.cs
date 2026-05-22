@@ -16,13 +16,12 @@ WHERE
     (@StartDateTime IS NULL
         OR DateTimeReceived >= @StartDateTime)
 AND (@EndDateTime IS NULL
-        OR DateTimeReceived < DATEADD(DAY, 1, @EndDateTime))
+        OR DateTimeReceived <= @EndDateTime)
 AND (@Endpoint IS NULL
         OR EndpointId LIKE @Endpoint + '%')
 ORDER BY DateTimeReceived DESC
 OFFSET (@PageNumber - 1) * @PageSize ROWS
-FETCH NEXT @PageSize ROWS ONLY;
-";
+FETCH NEXT @PageSize ROWS ONLY;";
 
 	public const string GetWebhookDetails = @"SELECT TOP(1)  
                                                 Id,
