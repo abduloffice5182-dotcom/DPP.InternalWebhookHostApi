@@ -5,6 +5,7 @@ global using Microsoft.Data.SqlClient;
 global using Microsoft.Extensions.Configuration;
 
 global using Dapper;
+global using Polly;
 
 global using DPP.InternalWebhookHost.Domain.Entities.Request.Webhook;
 global using DPP.InternalWebhookHost.Domain.Entities.Response.Webhook;

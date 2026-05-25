@@ -3,7 +3,7 @@
 namespace DPP.InternalWebhookHost.Infrastructure.Repositories;
 public class WebhookRepository : BaseRepository, IWebhookRepository
 {
-	public WebhookRepository(IDbConnectionFactory dbConnection, IConfiguration configuration) : base(dbConnection, configuration)
+	public WebhookRepository(IDbConnectionFactory dbConnection, IConfiguration configuration ,IDbPollyPolicies pollyPolicies) : base(dbConnection, configuration, pollyPolicies)
 	{
 	}
 	public async Task WebhooklLogSave(SaveWebhookPayloadsRequest webhookLogRequest,

@@ -1,4 +1,6 @@
-﻿namespace DPP.InternalWebhookHost.Application.Extensions;
+﻿using DPP.InternalWebhookHost.Rabbitmq.Extension;
+
+namespace DPP.InternalWebhookHost.Application.Extensions;
 
 public static class ApplicationServiceExtensions
 {
@@ -11,6 +13,7 @@ public static class ApplicationServiceExtensions
 		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 		services.AddHttpClient();
+		services.AddCustomRabbitmq();
 
 		return services;
 	}
