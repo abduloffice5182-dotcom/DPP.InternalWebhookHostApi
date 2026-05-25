@@ -54,6 +54,7 @@ namespace DPP.InternalWebhookHost.Rabbitmq.Consumer
 					configuration["RabbitMQ:Password"]
 			};
 
+			factory.AutomaticRecoveryEnabled = true;
 			connection =
 				await factory.CreateConnectionAsync();
 
