@@ -25,7 +25,9 @@ namespace DPP.InternalWebhookHost.Rabbitmq.Producer
 						configuration["RabbitMQ:Port"]!), 
 				UserName = configuration["RabbitMQ:Username"], 
 				Password = configuration["RabbitMQ:Password"]
+			
 			};
+			factory.AutomaticRecoveryEnabled = true;
 		}
 
 		public async Task PublishAsync<T>(
