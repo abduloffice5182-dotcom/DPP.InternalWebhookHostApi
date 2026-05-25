@@ -1,15 +1,20 @@
-﻿namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers;
+﻿using DPP.InternalWebhookHost.Rabbitmq.Interface;
+using Microsoft.Extensions.Configuration;
+
+namespace DPP.InternalWebhookHost.Application.Operations.Commands.Handlers;
 public class SaveWebhookCommandHandler : IRequestHandler<SaveWebhookCommand>
 {
-	private readonly IWebhookRepository webhookRepository;
+	readonly IRabbitMqProducer rabbitMqProducer;
+	readonly IConfiguration configuration;
 
-	public SaveWebhookCommandHandler(IWebhookRepository webhookRepository)
+	public SaveWebhookCommandHandler(IConfiguration configuration, IRabbitMqProducer rabbitMqProducer)
 	{
-		this.webhookRepository = webhookRepository;
+		this.rabbitMqProducer = rabbitMqProducer;
+		this.configuration = configuration;
 	}
 
 	public async Task Handle(SaveWebhookCommand request, CancellationToken cancellationToken)
 	{ 
-		 await webhookRepository.WebhooklLogSave(new SaveWebhookPayloadsRequest(request.Payload , request.EndpointId), cancellationToken);
+		await rabbitMqProducer.PublishAsync(configuration.GetValue<string>("RabbitMQ:WebhookCreatedQueueRoutingKey")!, request); 
 	}
 }
