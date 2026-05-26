@@ -1,3 +1,5 @@
+using DPP.InternalWebhookHost.Rabbitmq.Extension;
+
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
@@ -10,6 +12,7 @@ builder.Host.UseSerilog(Log.Logger);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterDI();
+builder.Services.AddCustomRabbitmq(configuration);
 builder.Services.RegisterServices(configuration);
 builder.Services.AddRouting(options =>
 {

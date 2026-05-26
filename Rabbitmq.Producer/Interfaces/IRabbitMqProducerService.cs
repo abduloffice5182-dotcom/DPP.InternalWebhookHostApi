@@ -9,7 +9,9 @@ namespace DPP.InternalWebhookHost.Rabbitmq.Interface
 	public interface IRabbitMqProducerService
 	{
 		Task PublishAsync<T>(
-		string routingKey,
-		T message);
+			string exchange,
+				string queue,
+			string routingKey,
+			T message);
 	}
 }
