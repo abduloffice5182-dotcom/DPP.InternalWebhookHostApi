@@ -4,21 +4,21 @@ using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace DPP.InternalWebhookHost.Rabbitmq.Producer
+namespace DPP.InternalWebhookHost.Rabbitmq.Services
 {
-	public class RabbitMqProducer
-   : IRabbitMqProducer
+	public class RabbitMqProducerService
+   : IRabbitMqProducerService
 	{
 		private readonly IConfiguration configuration;
 
 		private readonly ConnectionFactory factory;
 
-		public RabbitMqProducer(
+		public RabbitMqProducerService(
 			IConfiguration configuration)
 		{
 			this.configuration = configuration;
 
-			this.factory = new ConnectionFactory
+			factory = new ConnectionFactory
 			{
 				HostName = configuration["RabbitMQ:Host"], 
 				Port = int.Parse(

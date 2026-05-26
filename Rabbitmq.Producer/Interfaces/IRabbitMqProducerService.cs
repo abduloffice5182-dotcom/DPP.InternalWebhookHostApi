@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPP.InternalWebhookHost.Rabbitmq.Interface
 {
-	public interface IRabbitMqProducer
+	public interface IRabbitMqProducerService
 	{
 		Task PublishAsync<T>(
 		string routingKey,
