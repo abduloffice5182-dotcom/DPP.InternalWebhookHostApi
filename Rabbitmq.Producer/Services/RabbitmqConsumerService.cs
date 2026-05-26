@@ -1,182 +1,334 @@
 ﻿using DPP.InternalWebhookHost.Infrastructure.Interfaces;
 using DPP.InternalWebhookHost.Rabbitmq.Model;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace DPP.InternalWebhookHost.Rabbitmq.Services
+namespace DPP.InternalWebhookHost.Rabbitmq.Services;
+
+public class RabbitmqConsumers : BackgroundService
 {
-	public class RabbitmqConsumers
-	: BackgroundService
+	private readonly IConfiguration configuration;
+	private readonly IServiceScopeFactory scopeFactory;
+	private readonly ILogger<RabbitmqConsumers> logger;
+
+	private IConnection? connection;
+	private IChannel? consumerChannel;
+
+	private string consumerTag = string.Empty;
+
+	public RabbitmqConsumers(
+		IConfiguration configuration,
+		IServiceScopeFactory scopeFactory,
+		ILogger<RabbitmqConsumers> logger)
 	{
-		private readonly IConfiguration
-			configuration;
+		this.configuration = configuration;
+		this.scopeFactory = scopeFactory;
+		this.logger = logger;
+	}
 
-		private readonly IServiceScopeFactory
-			scopeFactory;
+	public override async Task StartAsync(
+		CancellationToken cancellationToken)
+	{
+		await InitializeRabbitMqAsync();
 
-		private IConnection? connection;
+		await base.StartAsync(cancellationToken);
+	}
 
-		private IChannel? channel;
-
-		public RabbitmqConsumers(
-			IConfiguration configuration,
-			IServiceScopeFactory scopeFactory)
+	private async Task InitializeRabbitMqAsync()
+	{
+		var factory = new ConnectionFactory
 		{
-			this.configuration = configuration;
-			this.scopeFactory = scopeFactory;
-		}
+			HostName = configuration["RabbitMQ:Host"],
+			Port = int.Parse(configuration["RabbitMQ:Port"]!),
+			UserName = configuration["RabbitMQ:Username"],
+			Password = configuration["RabbitMQ:Password"],
+			AutomaticRecoveryEnabled = true,
+			TopologyRecoveryEnabled = true,
+			NetworkRecoveryInterval = TimeSpan.FromSeconds(10),
+			RequestedHeartbeat = TimeSpan.FromSeconds(30)
+		};
 
-		public override async Task StartAsync(
-			CancellationToken cancellationToken)
-		{
-			var factory = new ConnectionFactory
+		connection = await factory.CreateConnectionAsync();
+		consumerChannel = await connection.CreateChannelAsync();
+		RegisterRabbitMqEvents();
+		var exchange = configuration["RabbitMQ:Exchange"]!;
+		var queue = configuration["RabbitMQ:WebhookCreatedQueue"]!;
+		var routingKey = configuration["RabbitMQ:WebhookCreatedQueueRoutingKey"]!;
+		var retryExchange = $"{exchange}.retry"; 
+		var retryQueue = $"{queue}.retry";
+		 
+		// MAIN EXCHANGE
+		await consumerChannel.ExchangeDeclareAsync(
+			exchange: exchange,
+			type: ExchangeType.Topic,
+			durable: true);
+
+		// RETRY EXCHANGE
+		await consumerChannel.ExchangeDeclareAsync(
+			exchange: retryExchange,
+			type: ExchangeType.Direct,
+			durable: true); 
+
+		// RETRY QUEUE
+		await consumerChannel.QueueDeclareAsync(
+			queue: retryQueue,
+			durable: true,
+			exclusive: false,
+			autoDelete: false,
+			arguments: new Dictionary<string, object?>
 			{
-				HostName =
-					configuration["RabbitMQ:Host"],
+                // Retry after 30 seconds
+                { "x-message-ttl", 30000 },
 
-				Port =
-					int.Parse(
-						configuration["RabbitMQ:Port"]!),
+                // Return to main exchange
+                { "x-dead-letter-exchange", exchange },
 
-				UserName =
-					configuration["RabbitMQ:Username"],
+                // Return to original routing key
+                { "x-dead-letter-routing-key", routingKey }
+			});
 
-				Password =
-					configuration["RabbitMQ:Password"]
-			};
+		await consumerChannel.QueueBindAsync(
+			queue: retryQueue,
+			exchange: retryExchange,
+			routingKey: routingKey);
 
-			factory.AutomaticRecoveryEnabled = true;
-			connection =
-				await factory.CreateConnectionAsync();
+		// MAIN QUEUE
+		await consumerChannel.QueueDeclareAsync(
+			queue: queue,
+			durable: true,
+			exclusive: false,
+			autoDelete: false,
+			arguments: new Dictionary<string, object?>
+			{
+                // Failed messages go to retry exchange
+                { "x-dead-letter-exchange", retryExchange },
 
-			channel =
-				await connection.CreateChannelAsync();
+                // Retry routing key
+                { "x-dead-letter-routing-key", routingKey }
+			});
 
-			var exchange =
-				configuration["RabbitMQ:Exchange"]!;
+		await consumerChannel.QueueBindAsync(
+			queue: queue,
+			exchange: exchange,
+			routingKey: routingKey);
 
-			var queue =
-				configuration[
-					"RabbitMQ:WebhookCreatedQueue"]!;
+		// LIMIT PARALLEL PROCESSING
+		await consumerChannel.BasicQosAsync(
+			prefetchSize: 0,
+			prefetchCount: 10,
+			global: false);
 
-			var routingKey =
-				configuration[
-					"RabbitMQ:WebhookCreatedQueueRoutingKey"]!;
+		logger.LogInformation(
+			"RabbitMQ initialized successfully");
+	}
 
-			// Declare Topic Exchange
-			await channel.ExchangeDeclareAsync(
-				exchange: exchange,
-				type: ExchangeType.Topic,
-				durable: true);
+	private void RegisterRabbitMqEvents()
+	{
+		if (connection != null)
+		{
+			connection.ConnectionShutdownAsync +=
+				async (sender, args) =>
+				{
+					logger.LogWarning(
+						"RabbitMQ connection shutdown: {Reason}",
+						args.ReplyText);
 
-			// Declare Queue
-			await channel.QueueDeclareAsync(
-				queue: queue,
-				durable: true,
-				exclusive: false,
-				autoDelete: false);
+					await Task.CompletedTask;
+				};
 
-			// Bind Queue To Exchange
-			await channel.QueueBindAsync(
-				queue: queue,
-				exchange: exchange,
-				routingKey: routingKey);
+			connection.CallbackExceptionAsync +=
+				async (sender, args) =>
+				{
+					logger.LogError(
+						args.Exception,
+						"RabbitMQ callback exception");
 
-			// IMPORTANT
-			// Prevent DB overload
-			await channel.BasicQosAsync(
-				prefetchSize: 0,
-				prefetchCount: 10,
-				global: false);
-
-			await base.StartAsync(
-				cancellationToken);
+					await Task.CompletedTask;
+				};
 		}
 
-		protected override async Task ExecuteAsync(
-			CancellationToken stoppingToken)
+		if (consumerChannel != null)
 		{
-			var consumer =
-				new AsyncEventingBasicConsumer(
-					channel);
-
-			consumer.ReceivedAsync +=
-				async (sender, ea) =>
+			consumerChannel.ChannelShutdownAsync +=
+				async (sender, args) =>
 				{
-					try
+					logger.LogWarning(
+						"RabbitMQ channel shutdown: {Reason}",
+						args.ReplyText);
+
+					await Task.CompletedTask;
+				};
+		}
+	}
+
+	protected override async Task ExecuteAsync(
+		CancellationToken stoppingToken)
+	{
+		if (consumerChannel == null)
+		{
+			throw new InvalidOperationException(
+				"Consumer channel not initialized");
+		}
+
+		var consumer =
+			new AsyncEventingBasicConsumer(
+				consumerChannel);
+
+		consumer.ReceivedAsync +=
+			async (sender, ea) =>
+			{
+				try
+				{
+					if (stoppingToken.IsCancellationRequested)
 					{
-						var json =
+						return;
+					}
+
+					var json =
 						Encoding.UTF8.GetString(
 							ea.Body.ToArray());
 
-						using var scope =
+					logger.LogInformation(
+						"Message received. DeliveryTag: {DeliveryTag}",
+						ea.DeliveryTag);
+
+					using var scope =
 						scopeFactory.CreateScope();
 
-						var repository =
+					var repository =
 						scope.ServiceProvider
-							.GetRequiredService
-							<IWebhookRepository>();
+							.GetRequiredService<IWebhookRepository>();
 
-						var message = JsonConvert.DeserializeObject<SaveWebhookCommand>(json);
-						await repository.WebhooklLogSave(new Domain.Entities.Request.Webhook.SaveWebhookPayloadsRequest(message.Payload, message.EndpointId)
-						,
+					var message =
+						JsonConvert.DeserializeObject
+							<SaveWebhookCommand>(json);
+
+					if (message == null)
+					{
+						throw new JsonException(
+							"Invalid message payload");
+					}
+
+					await repository.WebhooklLogSave(
+						new Domain.Entities.Request.Webhook
+							.SaveWebhookPayloadsRequest(
+								message.Payload,
+								message.EndpointId),
 						stoppingToken);
 
-
-						// SUCCESS ACK
-						await channel.BasicAckAsync(
-						deliveryTag:
-							ea.DeliveryTag,
+					await consumerChannel.BasicAckAsync(
+						deliveryTag: ea.DeliveryTag,
 						multiple: false);
-					}
-					catch (Exception ex)
-					{
-						Console.WriteLine(
-						ex.Message);
 
-						// FAILURE
-						await channel.BasicNackAsync(
-						deliveryTag:
-							ea.DeliveryTag,
-						multiple: false,
-						requeue: true);
-					}
-				};
+					logger.LogInformation(
+						"Message processed successfully");
+				}
+				catch (SqlException ex)
+				{
+					logger.LogWarning(
+						ex,
+						"Transient SQL failure");
 
-			await channel.BasicConsumeAsync(
-				queue:
-					configuration[
-						"RabbitMQ:WebhookCreatedQueue"]!,
+					await HandleRetryAsync(ea);
+				}
+				catch (TimeoutException ex)
+				{
+					logger.LogWarning(
+						ex,
+						"Timeout occurred");
 
+					await HandleRetryAsync(ea);
+				}
+				catch (IOException ex)
+				{
+					logger.LogWarning(
+						ex,
+						"IO/network failure");
+
+					await HandleRetryAsync(ea);
+				}
+				catch (JsonException ex)
+				{
+					logger.LogError(
+						ex,
+						"Invalid JSON payload");
+					await HandleRetryAsync(ea);
+				}
+				catch (Exception ex)
+				{
+					logger.LogError(
+						ex,
+						"Permanent failure");
+
+					await HandleRetryAsync(ea);
+				}
+			};
+
+		consumerTag =
+			await consumerChannel.BasicConsumeAsync(
+				queue: configuration[
+					"RabbitMQ:WebhookCreatedQueue"]!,
 				autoAck: false,
-
 				consumer: consumer);
-		}
 
-		public override async Task StopAsync(
-			CancellationToken cancellationToken)
+		logger.LogInformation(
+			"Consumer started. ConsumerTag: {ConsumerTag}",
+			consumerTag);
+
+		await Task.Delay(
+			Timeout.Infinite,
+			stoppingToken);
+	}
+	 
+
+	private async Task HandleRetryAsync(
+		BasicDeliverEventArgs ea)
+	{
+
+		logger.LogInformation(
+			"Moving message to retry queue");
+
+		await consumerChannel!.BasicNackAsync(
+			deliveryTag: ea.DeliveryTag,
+			multiple: false,
+			requeue: false);
+	}
+
+
+	public override async Task StopAsync(
+		CancellationToken cancellationToken)
+	{
+		logger.LogInformation(
+			"Stopping RabbitMQ consumer");
+
+		if (consumerChannel != null)
 		{
-			if (channel is not null)
+			if (!string.IsNullOrWhiteSpace(
+				consumerTag))
 			{
-				await channel.CloseAsync();
+				await consumerChannel.BasicCancelAsync(
+					consumerTag);
 			}
 
-			if (channel is not null)
-			{
-				await channel.CloseAsync();
-			}
+			await consumerChannel.CloseAsync();
 
-			await base.StopAsync(
-				cancellationToken);
+			await consumerChannel.DisposeAsync();
 		}
+
+		if (connection != null)
+		{
+			await connection.CloseAsync();
+
+			await connection.DisposeAsync();
+		}
+
+		await base.StopAsync(cancellationToken);
 	}
 }

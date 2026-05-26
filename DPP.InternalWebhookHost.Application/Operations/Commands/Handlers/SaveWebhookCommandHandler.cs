@@ -15,6 +15,7 @@ public class SaveWebhookCommandHandler : IRequestHandler<SaveWebhookCommand>
 
 	public async Task Handle(SaveWebhookCommand request, CancellationToken cancellationToken)
 	{ 
-		await rabbitMqProducer.PublishAsync(configuration.GetValue<string>("RabbitMQ:WebhookCreatedQueueRoutingKey")!, request); 
+
+		await rabbitMqProducer.PublishAsync(configuration["RabbitMQ:Exchange"]!, configuration["WebhookCreatedQueue"]!, configuration.GetValue<string>("RabbitMQ:WebhookCreatedQueueRoutingKey")!, request); 
 	}
 }

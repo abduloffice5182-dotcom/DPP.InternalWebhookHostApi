@@ -12,8 +12,7 @@ public static class ApplicationServiceExtensions
         });
 		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-		services.AddHttpClient();
-		services.AddCustomRabbitmq();
+		services.AddHttpClient(); 
 
 		return services;
 	}
