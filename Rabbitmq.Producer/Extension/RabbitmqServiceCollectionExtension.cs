@@ -1,7 +1,5 @@
-﻿
-using DPP.InternalWebhookHost.Rabbitmq.Consumer;
-using DPP.InternalWebhookHost.Rabbitmq.Interface;
-using DPP.InternalWebhookHost.Rabbitmq.Producer;
+﻿using DPP.InternalWebhookHost.Rabbitmq.Interface;
+using DPP.InternalWebhookHost.Rabbitmq.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DPP.InternalWebhookHost.Rabbitmq.Extension
@@ -10,8 +8,8 @@ namespace DPP.InternalWebhookHost.Rabbitmq.Extension
 	{
 		public static IServiceCollection AddCustomRabbitmq(this IServiceCollection services)
 		{
-			services.AddSingleton<IRabbitMqProducer,
-	RabbitMqProducer>();
+			services.AddSingleton<IRabbitMqProducerService,
+	RabbitMqProducerService>();
 
 			services.AddHostedService
 	<RabbitmqConsumers>();
