@@ -1,6 +1,6 @@
 ﻿namespace DPP.InternalWebhookHost.Application.Operations.Queries.Requests;
 
-public class GetWebhookReportQuery :  IRequest<IEnumerable<WebhookLogs>>, IDateRange, IPagingParameter
+public class GetWebhookReportQuery :  IRequest<WebhookListResponse>, IDateRange, IPagingParameter
 {
 	public DateTime FromDate { get; set; }
 	public DateTime ToDate { get; set; }

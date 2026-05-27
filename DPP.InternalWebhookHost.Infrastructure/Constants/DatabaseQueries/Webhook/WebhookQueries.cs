@@ -21,7 +21,18 @@ AND (@Endpoint IS NULL
         OR EndpointId LIKE @Endpoint + '%')
 ORDER BY DateTimeReceived DESC
 OFFSET (@PageNumber - 1) * @PageSize ROWS
-FETCH NEXT @PageSize ROWS ONLY;";
+FETCH NEXT @PageSize ROWS ONLY;
+
+SELECT COUNT(Id) AS TotalCount
+FROM WebhookPayloads WITH (NOLOCK)
+WHERE
+    (@StartDateTime IS NULL
+        OR DateTimeReceived >= @StartDateTime)
+AND (@EndDateTime IS NULL
+        OR DateTimeReceived <= @EndDateTime)
+AND (@Endpoint IS NULL
+        OR EndpointId LIKE @Endpoint + '%');
+";
 
 	public const string GetWebhookDetails = @"SELECT TOP(1)  
                                                 Id,

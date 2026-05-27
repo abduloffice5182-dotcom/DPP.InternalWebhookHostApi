@@ -61,5 +61,32 @@ public class BaseRepository
 			  param, commandType: commandType ?? CommandType.Text, commandTimeout: sqlConnectionTimeout);
 		}); 
 	}
+
+
+	protected async Task<T> QueryMultipleAsync<T>(
+		string sql,
+		Func<SqlMapper.GridReader, Task<T>> handler,
+		object? param = null,
+		CommandType? commandType = null,
+		CancellationToken cancellationToken = default)
+	{
+		var policy = Policy.WrapAsync(
+			pollyPolicies.RetryPolicy(),
+			pollyPolicies.CircuitBreakerPolicy());
+
+		return await policy.ExecuteAsync(async () =>
+		{
+			 using var conn =
+				await dbConnection.GetCoreTransactionConnection(cancellationToken);
+
+			using var multi = await conn.QueryMultipleAsync(
+				sql,
+				param,
+				commandType: commandType ?? CommandType.Text,
+				commandTimeout: sqlConnectionTimeout);
+
+			return await handler(multi);
+		});
+	}
 }
 

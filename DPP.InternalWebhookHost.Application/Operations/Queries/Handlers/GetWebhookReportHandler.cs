@@ -1,5 +1,5 @@
 ﻿namespace DPP.InternalWebhookHost.Application.Operations.Queries.Handlers;
-public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IEnumerable<WebhookLogs>>
+public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, WebhookListResponse>
 {
 
 	private readonly IWebhookRepository repository;
@@ -8,8 +8,8 @@ public class GetWebhookReportHandler : IRequestHandler<GetWebhookReportQuery, IE
 	{
 		this.repository = repository;
 	}
-
-	public async Task<IEnumerable<WebhookLogs>> Handle( GetWebhookReportQuery req, CancellationToken cancellationToken)
+	 
+	public async Task<WebhookListResponse> Handle( GetWebhookReportQuery req, CancellationToken cancellationToken)
 	{
 		return await repository.GetWebhookReportAsync(
 			new WebhookLogRequest(

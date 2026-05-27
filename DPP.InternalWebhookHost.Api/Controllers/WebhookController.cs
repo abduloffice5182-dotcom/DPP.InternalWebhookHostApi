@@ -13,7 +13,7 @@ public class WebhookController : BaseController
 	#region GET
 	[HttpGet]
 	[Route("report")]
-	public async Task<IEnumerable<WebhookLogs>> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
+	public async Task<WebhookListResponse> GetReport([FromQuery] GetWebhookReportQuery request, CancellationToken cancellationToken)
 	{
 		return await mediator.Send(request, cancellationToken); 
 	}

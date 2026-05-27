@@ -1,4 +1,4 @@
-using DPP.InternalWebhookHost.Rabbitmq.Extension;
+using DPP.InternalWebhookHost.Rabbitmq.Extension; 
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
