@@ -122,7 +122,7 @@ public class RabbitmqConsumers : BackgroundService
 		// LIMIT PARALLEL PROCESSING
 		await consumerChannel.BasicQosAsync(
 			prefetchSize: 0,
-			prefetchCount: 10,
+			prefetchCount: 30,
 			global: false);
 
 		logger.LogInformation(

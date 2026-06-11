@@ -22,6 +22,24 @@ namespace DPP.InternalWebhookHost.Rabbitmq.Services
 			this.logger = logger;
 			this.connection = connection;
 
+			this.connection.ConnectionShutdownAsync += (_, e) =>
+			{
+				logger.LogWarning(
+					"RabbitMQ Connection Shutdown. ReplyCode: {ReplyCode}, ReplyText: {ReplyText}",
+					e.ReplyCode,
+					e.ReplyText);
+
+				return Task.CompletedTask;
+			};
+			connection.CallbackExceptionAsync += (_, e) =>
+			{
+				logger.LogError(
+					e.Exception,
+					"RabbitMQ Callback Exception");
+
+				return Task.CompletedTask;
+			};
+
 		}
 
 		public async Task PublishAsync<T>(
@@ -31,6 +49,7 @@ namespace DPP.InternalWebhookHost.Rabbitmq.Services
 			T message)
 		{  
 			await using var channel = await connection.CreateChannelAsync(); 
+			
 			await CreateExchangeAndQueues(channel, exchange, queue, routingKey);
 			 
 			var json = JsonSerializer.Serialize(message); 
