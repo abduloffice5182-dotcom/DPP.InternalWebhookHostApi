@@ -40,7 +40,7 @@ AND (@Endpoint IS NULL
                                                 Payload,
                                                 DateTimeReceived 
                                             FROM WebhookPayloads WITH (NOLOCK)
-                                            WHERE Id >= @Id";
+                                            WHERE Id = @Id";
 
 }
 
